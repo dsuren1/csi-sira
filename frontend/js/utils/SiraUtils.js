@@ -48,7 +48,6 @@ module.exports = {
         }
     },
 
-
     getConfigOggetti: function() {
         return this.store.getState().siradec.configOggetti;
     },
