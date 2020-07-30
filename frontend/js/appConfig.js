@@ -20,22 +20,62 @@ module.exports = {
     pluginsDef: require('./plugins.js'),
     initialState: {
         defaultState: {
+            mousePosition: {enabled: false},
             controls: {
+                help: {
+                    enabled: false
+                },
+                details: {
+                    enabled: false
+                },
+                print: {
+                    enabled: false
+                },
                 toolbar: {
                     active: null,
                     expanded: false
                 },
                 drawer: {
-                    enabled: true,
+                    enabled: false,
                     menu: "1"
+                },
+                RefreshLayers: {
+                    enabled: false,
+                    options: {
+                        bbox: true,
+                        search: true,
+                        title: false,
+                        dimensions: false
+                    }
+                },
+                cookie: {
+                    enabled: false,
+                    seeMore: false
                 }
             },
-            mapInfo: {infoFormat: 'text/html'}
+            maps: {
+                mapType: "openlayers"
+            },
+            maptype: {
+                mapType: "openlayers"
+            },
+            catalog: {
+                format: "wms",
+                "supportedFormats": [{"name": "wms", "label": "WMS"}, {"name": "csw", "label": "CSW"}]
+            },
+            mapInfo: {enabled: true, infoFormat: 'application/json' }
         },
         mobile: {
-            mapInfo: {enabled: true, infoFormat: 'text/html' },
+            mapInfo: {enabled: true, infoFormat: 'application/json' },
             mousePosition: {enabled: true, crs: "EPSG:4326", showCenter: true}
         }
     },
-    storeOpts: {}
+    // themeCfg: {
+    //     theme: "sira"
+    // },
+    storeOpts: {
+        persist: {
+            whitelist: ['security']
+        }
+    }
 };

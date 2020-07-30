@@ -16,4 +16,3 @@ module.exports = function addProjs() {
         worldExtent: [6.0000, 0.0000, 12.0000, 84.0000]
     }));
 };
-

@@ -9,10 +9,11 @@ module.exports = {
     pages: [
         { path: "/", component: require('../containers/QGis')},
         { path: "/:profile", component: require('../containers/QGis')}
-        ],
+    ],
     pluginsDef: {plugins: {}},
     initialState: {
         defaultState: {
+            mousePosition: {enabled: false}
         }
     },
     storeOpts: {}

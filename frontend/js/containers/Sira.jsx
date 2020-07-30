@@ -51,39 +51,39 @@ const authParams = {
 const {hideBox, loadLegends, toggleLegendBox} = require('../actions/metadatainfobox');
 const mapStateToPropsMIB = (state) => {
     return {
-      show: state.metadatainfobox.show,
-      openLegendPanel: state.metadatainfobox.openLegendPanel,
-      title: state.metadatainfobox.title,
-      text: state.metadatainfobox.text,
-      numDatasetObjectCalc: state.metadatainfobox.numDatasetObjectCalc,
-      dataProvider: state.metadatainfobox.dataProvider,
-      urlMetadato: state.metadatainfobox.urlMetadato,
-      urlWMS: state.metadatainfobox.urlWMS,
-      urlWFS: state.metadatainfobox.urlWFS,
-      urlLegend: state.metadatainfobox.urlLegend,
-      error: state.metadatainfobox.error,
-      showButtonLegend: state.metadatainfobox.showButtonLegend
-  };
+        show: state.metadatainfobox.show,
+        openLegendPanel: state.metadatainfobox.openLegendPanel,
+        title: state.metadatainfobox.title,
+        text: state.metadatainfobox.text,
+        numDatasetObjectCalc: state.metadatainfobox.numDatasetObjectCalc,
+        dataProvider: state.metadatainfobox.dataProvider,
+        urlMetadato: state.metadatainfobox.urlMetadato,
+        urlWMS: state.metadatainfobox.urlWMS,
+        urlWFS: state.metadatainfobox.urlWFS,
+        urlLegend: state.metadatainfobox.urlLegend,
+        error: state.metadatainfobox.error,
+        showButtonLegend: state.metadatainfobox.showButtonLegend
+    };
 };
 
 const mapDispatchToPropsMIB = (dispatch) => {
     return {
-    loadLegend: (u, actualUrl) => {
-        if (actualUrl && actualUrl.length === 0) {
-            dispatch(loadLegends(u));
+        loadLegend: (u, actualUrl) => {
+            if (actualUrl && actualUrl.length === 0) {
+                dispatch(loadLegends(u));
+            }
+            dispatch(toggleLegendBox());
+        },
+        closePanel: () => {
+            dispatch(hideBox());
         }
-        dispatch(toggleLegendBox());
-    },
-    closePanel: () => {
-        dispatch(hideBox());
-    }
-  };
+    };
 };
 
 const MetadataInfoBox = connect(
     mapStateToPropsMIB,
     mapDispatchToPropsMIB
-    )(require('../components/MetadataInfoBox'));
+)(require('../components/MetadataInfoBox'));
 
 const { changeMousePointer} = require('../../MapStore2/web/client/actions/map');
 
@@ -96,22 +96,22 @@ const {selectFeatures, setFeatures} = require('../actions/featuregrid');
 const GetFeatureInfo = connect((state) => {
     const activeConfig = state.siradec.activeFeatureType && state.siradec.configOggetti[state.siradec.activeFeatureType] || {};
     return {
-    siraFeatureTypeName: activeConfig.featureTypeName,
-    siraFeatureInfoDetails: state.siradec.configOggetti,
-    siraTopology: state.siradec.topology,
-    siraTopologyConfig: state.mapInfo.topologyConfig,
-    infoEnabled: state.mapInfo && state.mapInfo.infoEnabled || false,
-    topologyInfoEnabled: state.mapInfo && state.mapInfo.topologyInfoEnabled || false,
-    htmlResponses: state.mapInfo && state.mapInfo.responses || [],
-    htmlRequests: state.mapInfo && state.mapInfo.requests || {length: 0},
-    infoFormat: state.mapInfo && state.mapInfo.infoFormat,
-    detailsConfig: state.mapInfo.detailsConfig,
-    // modelConfig: state.mapInfo.modelConfig,
-    template: state.mapInfo.template,
-    map: state.map && state.map.present,
-    infoType: state.mapInfo.infoType,
-    layers: state.layers && state.layers.flat || [],
-    clickedMapPoint: state.mapInfo && state.mapInfo.clickPoint};
+        siraFeatureTypeName: activeConfig.featureTypeName,
+        siraFeatureInfoDetails: state.siradec.configOggetti,
+        siraTopology: state.siradec.topology,
+        siraTopologyConfig: state.mapInfo.topologyConfig,
+        infoEnabled: state.mapInfo && state.mapInfo.infoEnabled || false,
+        topologyInfoEnabled: state.mapInfo && state.mapInfo.topologyInfoEnabled || false,
+        htmlResponses: state.mapInfo && state.mapInfo.responses || [],
+        htmlRequests: state.mapInfo && state.mapInfo.requests || {length: 0},
+        infoFormat: state.mapInfo && state.mapInfo.infoFormat,
+        detailsConfig: state.mapInfo.detailsConfig,
+        // modelConfig: state.mapInfo.modelConfig,
+        template: state.mapInfo.template,
+        map: state.map && state.map.present,
+        infoType: state.mapInfo.infoType,
+        layers: state.layers && state.layers.flat || [],
+        clickedMapPoint: state.mapInfo && state.mapInfo.clickPoint};
 }, (dispatch) => {
     return {
         actions: bindActionCreators({
@@ -188,7 +188,7 @@ class Sira extends React.Component {
                     cartListaStyle="btn btn-primary"
                     cartMappaStyle="btn btn-primary active"
                     onBack={this.back}
-                    />
+                />
 
                 <div className="mapbody">
                     <span className={this.props.error && 'error' || !this.props.loading && 'hidden' || ''}>
@@ -196,8 +196,8 @@ class Sira extends React.Component {
                     </span>
                     <SidePanel auth={authParams[this.props?.params?.profile]} profile={this.props.profile.profile}/>
                     <MapViewer
-                    plugins={this.props.plugins}
-                    params={this.props.viewerParams}
+                        plugins={this.props.plugins}
+                        params={this.props.viewerParams}
                     />
                     <Card profile={this.props.profile.profile} authParam={authParams[this.props?.params?.profile]}/>
                     <GetFeatureInfo
