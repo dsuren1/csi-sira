@@ -13,7 +13,7 @@ module.exports = {
         } else {
             localStorage.setItem("sira.config.map", JSON.stringify({zoom, center}));
             window.open(`map.html?${currentUrl.hash}`, '_blank');
-           // window.location.href = `map.html?${query}${currentUrl.hash}`;
+            // window.location.href = `map.html?${query}${currentUrl.hash}`;
         }
     },
 

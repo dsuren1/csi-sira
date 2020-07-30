@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -21,7 +22,7 @@ const {showPanel, hidePanel, removeServiceFromCart, removeLayersFromCart, prepar
 const {showHideRightMenu, showHideRightConoscenzaAmbBox, showHideCreditsBox} = require('../actions/header');
 
 const SistemaConoscenzeAmbientaliBox = connect((state) => ({
-    show: state.header.showSistemaConoscenzeAmbientaliBox
+    show: state.header?.showSistemaConoscenzeAmbientaliBox
 }), (dispatch) => {
     return {
       closePanel: () => {
@@ -31,7 +32,7 @@ const SistemaConoscenzeAmbientaliBox = connect((state) => ({
 })(require('./SistemaConoscenzeAmbientaliBox'));
 
 const Credits = connect((state) => ({
-    show: state.header.showCreditsBox
+    show: state.header?.showCreditsBox
 }), (dispatch) => {
     return {
       closePanel: () => {
@@ -41,7 +42,7 @@ const Credits = connect((state) => ({
 })(require('./Credits'));
 
 const RightMenu = connect((state) => ({
-    open: state.header.showRightMenu
+    open: state.header?.showRightMenu
 }), (dispatch) => {
     return {
       clickOnIconButton: () => {
@@ -118,30 +119,28 @@ const LoginPanel = connect((state) => ({
 })(require('./LoginPanel'));
 
 
-const Header = React.createClass({
-    propTypes: {
-        showCart: React.PropTypes.bool,
-        cartMappaStyle: React.PropTypes.string,
-        cartListaStyle: React.PropTypes.string,
-        goToDataset: React.PropTypes.func,
-        goToHome: React.PropTypes.func
-    },
+class Header extends React.Component {
+    static propTypes = {
+        showCart: PropTypes.bool,
+        cartMappaStyle: PropTypes.string,
+        cartListaStyle: PropTypes.string,
+        goToDataset: PropTypes.func,
+        goToHome: PropTypes.func
+    };
 
-    getDefaultProps() {
-        return {
-            cartMappaStyle: 'btn btn-primary',
-            cartListaStyle: 'btn btn-primary active',
-            showCart: false,
-            goToDataset: () => {},
-            goToHome: () => {}
-       };
-    },
+    static defaultProps = {
+        cartMappaStyle: 'btn btn-primary',
+        cartListaStyle: 'btn btn-primary active',
+        showCart: false,
+        goToDataset: () => {},
+        goToHome: () => {}
+   };
 
-    renderCart() {
+    renderCart = () => {
         const lStyle = this.props.cartListaStyle;
         const mStyle = this.props.cartMappaStyle;
         return this.props.showCart ? <Cart onListaClick={this.props.goToDataset} listaStyle={lStyle} mappaStyle={mStyle}/> : null;
-    },
+    };
 
     render() {
         return (
@@ -171,6 +170,6 @@ const Header = React.createClass({
             </div>
     );
     }
-});
+}
 
 module.exports = Header;

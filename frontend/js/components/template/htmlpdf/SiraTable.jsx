@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -13,54 +14,58 @@ const TemplateUtils = require('../../../utils/TemplateUtils');
 var {FormattedDate} = require('react-intl');
 
 const assign = require('object-assign');
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 const {isArray} = require('lodash');
 
-const SiraTable = React.createClass({
-    propTypes: {
-        id: React.PropTypes.string,
-        card: React.PropTypes.object,
-        columns: React.PropTypes.array,
-        dependsOn: React.PropTypes.object,
-        features: React.PropTypes.oneOfType([
-            React.PropTypes.array,
-            React.PropTypes.func,
-            React.PropTypes.object
+class SiraTable extends React.Component {
+    static propTypes = {
+        id: PropTypes.string,
+        card: PropTypes.object,
+        columns: PropTypes.array,
+        dependsOn: PropTypes.object,
+        features: PropTypes.oneOfType([
+            PropTypes.array,
+            PropTypes.func,
+            PropTypes.object
         ]),
-        wfsVersion: React.PropTypes.string,
-        profile: React.PropTypes.string
-    },
-    contextTypes: {
-        locale: React.PropTypes.string
-    },
-    getDefaultProps() {
-        return {
-            id: "SiraTable",
-            features: [],
-            wfsVersion: null,
-            card: null,
-            dependsOn: null,
-            columns: [],
-            profile: null
-        };
-    },
-    renderTableHeader(columns) {
+        wfsVersion: PropTypes.string,
+        profile: PropTypes.string
+    };
+
+    static contextTypes = {
+        locale: PropTypes.string
+    };
+
+    static defaultProps = {
+        id: "SiraTable",
+        features: [],
+        wfsVersion: null,
+        card: null,
+        dependsOn: null,
+        columns: [],
+        profile: null
+    };
+
+    renderTableHeader = (columns) => {
         return columns.map((c) => {
             return (<th key={c.field}>{c.headerName}</th>);
         });
-    },
-    renderDate(value, dateFormat, locale) {
+    };
+
+    renderDate = (value, dateFormat, locale) => {
         const date = new Date(value);
         return !isNaN(date.getTime()) ? (<FormattedDate locales={locale} value={date} {...dateFormat} />) : (<span/>);
-    },
-    renderTableBody(features, columns) {
+    };
+
+    renderTableBody = (features, columns) => {
         return features.map((f, idx) => {
             return (<tr key={idx}>{columns.map((c) => {
                 return (<td key={c.field}>{c.dateFormat ? this.renderDate(f[c.field], c.dateFormat, c.locale || 'it-IT' ) : f[c.field]}</td>);
             })}</tr>);
         });
-    },
-    renderChildrenTable(columns, features, id, title) {
+    };
+
+    renderChildrenTable = (columns, features, id, title) => {
         return (
             <div key={id}>
             <h5 className="pdf-title">{title}</h5>
@@ -75,7 +80,8 @@ const SiraTable = React.createClass({
             </tbody>
         </table>
         </div>);
-    },
+    };
+
     render() {
         let features;
         let columns = this.props.columns.map((column) => {
@@ -140,7 +146,7 @@ const SiraTable = React.createClass({
                 </tbody>
             </table>);
     }
-});
+}
 
 module.exports = connect((state) => {
     return {

@@ -28,7 +28,7 @@ const assign = require('object-assign');
 
 const url = require('url');
 const urlQuery = url.parse(window.location.href, true).query;
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 
 const initialState = {
     waitingForConfig: null,

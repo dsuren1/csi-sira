@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -12,44 +13,45 @@ const Select = require('react-select');
 const {Button, Glyphicon, Alert} = require('react-bootstrap');
 const ExporterUtils = require('../utils/ExporterUtils');
 require('react-select/dist/react-select.css');
-const SiraExporter = React.createClass({
-    propTypes: {
-        show: React.PropTypes.bool.isRequired,
-        exportParams: React.PropTypes.object,
-        params: React.PropTypes.object,
-        toggleExporter: React.PropTypes.func,
-        searchUrl: React.PropTypes.string.isRequired,
-        getFeaturesAndExport: React.PropTypes.func,
-        getFileAndExport: React.PropTypes.func,
-        featuregrid: React.PropTypes.object,
-        loading: React.PropTypes.bool,
-        errormsg: React.PropTypes.string,
-        csvName: React.PropTypes.string,
-        shpName: React.PropTypes.string,
-        addFile: React.PropTypes.string,
-        csvMimeType: React.PropTypes.string,
-        srs: React.PropTypes.string
-    },
-    getDefaultProps() {
-        return {
-            show: false,
-            toggleExporter: () => {},
-            exportparams: {}
-        };
-    },
-    getInitialState() {
-        return {
-            outputformat: "csv",
-            type: "all"
-        };
-    },
-    renderError() {
+
+class SiraExporter extends React.Component {
+    static propTypes = {
+        show: PropTypes.bool.isRequired,
+        exportParams: PropTypes.object,
+        params: PropTypes.object,
+        toggleExporter: PropTypes.func,
+        searchUrl: PropTypes.string.isRequired,
+        getFeaturesAndExport: PropTypes.func,
+        getFileAndExport: PropTypes.func,
+        featuregrid: PropTypes.object,
+        loading: PropTypes.bool,
+        errormsg: PropTypes.string,
+        csvName: PropTypes.string,
+        shpName: PropTypes.string,
+        addFile: PropTypes.string,
+        csvMimeType: PropTypes.string,
+        srs: PropTypes.string
+    };
+
+    static defaultProps = {
+        show: false,
+        toggleExporter: () => {},
+        exportparams: {}
+    };
+
+    state = {
+        outputformat: "csv",
+        type: "all"
+    };
+
+    renderError = () => {
         return (<div role="body" style={{height: "150px", display: "flex",
                     flexDirection: "column", justifyContent: "space-between"}}>
                     <span><strong style={{color: "red", textAlign: "center"}}>{this.props.errormsg}</strong></span>
                     </div>);
-    },
-    renderSelectors() {
+    };
+
+    renderSelectors = () => {
         const heigth = this.state.outputformat === 'shp' ? "260px" : "150px";
         return (
             <div role="body" style={{height: heigth, display: "flex",
@@ -77,7 +79,8 @@ const SiraExporter = React.createClass({
               </Alert>) : null}
             <Button bsStyle="primary" style={{alignSelf: "flex-end"}} onClick={this.exportFeatures}><span>Export</span><Glyphicon glyph="download-alt" /></Button>
             </div>);
-    },
+    };
+
     render() {
         return this.props.show ? (<Dialog
             id="SiraExporter"
@@ -94,8 +97,9 @@ const SiraExporter = React.createClass({
             <div role="header"></div>
             {this.props.errormsg ? this.renderError() : this.renderSelectors()}
             </Dialog>) : null;
-    },
-    exportFeatures() {
+    }
+
+    exportFeatures = () => {
         const params = this.props.exportParams;
         let ftName = params.featureType.split(":").pop();
         let name = this.state.outputformat === 'shp' ? this.props.shpName : this.props.csvName;
@@ -111,7 +115,7 @@ const SiraExporter = React.createClass({
         }else if (this.state.type === 'all' && params.filter && params.columns) {
             this.props.getFeaturesAndExport(this.props.searchUrl, this.props.params, params.filter, params.columns, this.state.outputformat, this.props.featuregrid, name, this.props.csvMimeType, this.props.addFile, this.props.srs);
         }
-    }
-});
+    };
+}
 
 module.exports = SiraExporter;

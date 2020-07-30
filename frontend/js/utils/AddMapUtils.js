@@ -7,7 +7,7 @@
  */
 const assign = require('object-assign');
 const {isArray, memoize} = require('lodash');
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 const urlUtil = require('url');
 const CoordinatesUtils = require('../../MapStore2/web/client/utils/CoordinatesUtils');
 const {Promise} = require('es6-promise');

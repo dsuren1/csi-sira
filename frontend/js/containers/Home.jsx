@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -24,25 +25,27 @@ const PlatformNumbers = connect((state) => ({
 
 const SiraSearchBar = require('../components/SiraSearchBar');
 
-const Home = React.createClass({
-    propTypes: {
-        loadMetadata: React.PropTypes.func,
-        params: React.PropTypes.object,
-        selectCategory: React.PropTypes.func,
-        allCategory: React.PropTypes.object,
-        resetObjectAndView: React.PropTypes.func
-    },
-    contextTypes: {
-        router: React.PropTypes.object
-    },
-    getInitialState() {
-        return {
-            searchText: ""
-        };
-    },
+class Home extends React.Component {
+    static propTypes = {
+        loadMetadata: PropTypes.func,
+        params: PropTypes.object,
+        selectCategory: PropTypes.func,
+        allCategory: PropTypes.object,
+        resetObjectAndView: PropTypes.func
+    };
+
+    static contextTypes = {
+        router: PropTypes.object
+    };
+
+    state = {
+        searchText: ""
+    };
+
     componentDidMount() {
         document.body.className = "body_home";
-    },
+    }
+
     render() {
         return (
             <div className="home-page">
@@ -64,9 +67,9 @@ const Home = React.createClass({
                                         this.props.selectCategory(this.props.allCategory, 'objects');
                                         this.props.loadMetadata({params: {text}});
                                         if (this.props.params.profile) {
-                                            this.context.router.push('/dataset/${this.props.params.profile}/');
+                                            this.context.router.history.push('/dataset/${this.props.params.profile}/');
                                         }else {
-                                            this.context.router.push('/dataset/');
+                                            this.context.router.history.push('/dataset/');
                                         }
                                     }}
                                 />
@@ -95,17 +98,18 @@ const Home = React.createClass({
             <PlatformNumbers />
             <Footer />
         </div>);
-    },
-    selectCategory(category, subcat) {
+    }
+
+    selectCategory = (category, subcat) => {
         this.props.resetObjectAndView();
         this.props.selectCategory(category, subcat);
-        if (this.props.params.profile) {
-            this.context.router.push('/dataset/${this.props.params.profile}/');
+        if (this.props?.params?.profile) {
+            this.context.router.history.push('/dataset/${this.props.params.profile}/');
         }else {
-            this.context.router.push('/dataset/');
+            this.context.router.history.push('/dataset/');
         }
-    }
-});
+    };
+}
 
 module.exports = connect((state) => {
     const {tiles} = categorySelector(state);

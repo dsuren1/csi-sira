@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2015, GeoSolutions Sas.
  * All rights reserved.
@@ -38,32 +39,33 @@ MapInfoUtils.AVAILABLE_FORMAT = ['TEXT', 'JSON', 'HTML', 'GML3'];
 
 const I18N = require('../../../MapStore2/web/client/components/I18N/I18N');
 
-const GetFeatureInfoViewer = React.createClass({
-    propTypes: {
-        infoFormat: React.PropTypes.oneOf(
+class GetFeatureInfoViewer extends React.Component {
+    static propTypes = {
+        infoFormat: PropTypes.oneOf(
             MapInfoUtils.getAvailableInfoFormatValues()
         ),
-        profile: React.PropTypes.string,
-        responses: React.PropTypes.array,
-        missingRequests: React.PropTypes.number,
-        display: React.PropTypes.string,
-        params: React.PropTypes.object,
-        contentConfig: React.PropTypes.object
-    },
-    getDefaultProps() {
-        return {
-            display: "accordion",
-            profile: null,
-            responses: [],
-            missingRequests: 0,
-            contentConfig: {}
-        };
-    },
+        profile: PropTypes.string,
+        responses: PropTypes.array,
+        missingRequests: PropTypes.number,
+        display: PropTypes.string,
+        params: PropTypes.object,
+        contentConfig: PropTypes.object
+    };
+
+    static defaultProps = {
+        display: "accordion",
+        profile: null,
+        responses: [],
+        missingRequests: 0,
+        contentConfig: {}
+    };
+
     shouldComponentUpdate(nextProps) {
         return nextProps.responses !== this.props.responses || nextProps.missingRequests !== this.props.missingRequests ||
           nextProps.contentConfig !== this.props.contentConfig;
-    },
-    getValidator(infoFormat) {
+    }
+
+    getValidator = (infoFormat) => {
         var infoFormats = MapInfoUtils.getAvailableInfoFormat();
         switch (infoFormat) {
             case infoFormats.JSON:
@@ -77,11 +79,12 @@ const GetFeatureInfoViewer = React.createClass({
             default:
                 return null;
         }
-    },
+    };
+
     /**
      * render empty layers or not valid responses section.
      */
-    renderEmptyLayers(validator) {
+    renderEmptyLayers = (validator) => {
         const notEmptyResponses = validator.getValidResponses(this.props.responses).length;
         const filteredResponses = validator.getNoValidResponses(this.props.responses);
         if (this.props.missingRequests === 0 && notEmptyResponses === 0) {
@@ -100,11 +103,12 @@ const GetFeatureInfoViewer = React.createClass({
             );
         }
         return null;
-    },
+    };
+
     /**
      * Render a single layer feature info
      */
-    renderInfoPage(response, requesInfoFormat, layerId) {
+    renderInfoPage = (response, requesInfoFormat, layerId) => {
         var infoFormats = MapInfoUtils.getAvailableInfoFormat();
         switch (requesInfoFormat) {
             case infoFormats.JSON:
@@ -138,11 +142,12 @@ const GetFeatureInfoViewer = React.createClass({
             default:
                 return null;
         }
-    },
+    };
+
     /**
      * Some info about the event
      */
-    renderAdditionalInfo() {
+    renderAdditionalInfo = () => {
         var infoFormats = MapInfoUtils.getAvailableInfoFormat();
         switch (this.props.infoFormat) {
             case infoFormats.JSON:
@@ -156,14 +161,17 @@ const GetFeatureInfoViewer = React.createClass({
             default:
                 return null;
         }
-    },
-    renderLeftButton() {
+    };
+
+    renderLeftButton = () => {
         return <a style={{"float": "left"}} onClick={() => {this.refs.container.swipe.prev(); }}><Glyphicon glyph="chevron-left" /></a>;
-    },
-    renderRightButton() {
+    };
+
+    renderRightButton = () => {
         return <a style={{"float": "right"}} onClick={() => {this.refs.container.swipe.next(); }}><Glyphicon glyph="chevron-right" /></a>;
-    },
-    renderPageHeader(res, layerMetadata) {
+    };
+
+    renderPageHeader = (res, layerMetadata) => {
         return (
             <span>
                 {this.props.display === "accordion" ? "" : this.renderLeftButton()}
@@ -171,11 +179,12 @@ const GetFeatureInfoViewer = React.createClass({
                 {this.props.display === "accordion" ? "" : this.renderRightButton()}
             </span>
         );
-    },
+    };
+
     /**
      * render all the feature info pages
      */
-    renderPages(responses) {
+    renderPages = (responses) => {
         if ((this.props.missingRequests === 0 && responses.length === 0) || !responses) {
             return (
                 <Alert bsStyle={"danger"}>
@@ -198,7 +207,8 @@ const GetFeatureInfoViewer = React.createClass({
                 </Panel>
             );
         });
-    },
+    };
+
     render() {
         const Container = this.props.display === "accordion" ? Accordion : ReactSwipe;
         let validResponses = [];
@@ -221,6 +231,6 @@ const GetFeatureInfoViewer = React.createClass({
             </div>
         );
     }
-});
+}
 
 module.exports = GetFeatureInfoViewer;

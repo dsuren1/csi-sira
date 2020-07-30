@@ -7,7 +7,7 @@
  */
 
 const msMapConfig = require('../../MapStore2/web/client/reducers/config');
-const CommonLayers = require('json!../../siraCommonLayers.json');
+const CommonLayers = require('../../siraCommonLayers.json');
 const assign = require('object-assign');
 
 function mapConfig(state = null, action) {

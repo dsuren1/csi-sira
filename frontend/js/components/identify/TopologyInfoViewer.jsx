@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2015, GeoSolutions Sas.
  * All rights reserved.
@@ -38,29 +39,29 @@ const FeatureGrid = connect((state) => {
 
 const Spinner = require('../../../MapStore2/web/client/components/misc/spinners/BasicSpinner/BasicSpinner');
 
-const TopologyInfoViewer = React.createClass({
-    propTypes: {
-        responses: React.PropTypes.array,
-        missingRequests: React.PropTypes.number,
-        infoTopologyResponse: React.PropTypes.object,
-        display: React.PropTypes.string,
+class TopologyInfoViewer extends React.Component {
+    static propTypes = {
+        responses: PropTypes.array,
+        missingRequests: PropTypes.number,
+        infoTopologyResponse: PropTypes.object,
+        display: PropTypes.string,
         // modelConfig: React.PropTypes.object,
-        topologyConfig: React.PropTypes.object,
-        actions: React.PropTypes.shape({
-            setFeatures: React.PropTypes.func
+        topologyConfig: PropTypes.object,
+        actions: PropTypes.shape({
+            setFeatures: PropTypes.func
         })
-    },
-    getDefaultProps() {
-        return {
-            display: "accordion",
-            responses: [],
-            missingRequests: 0,
-            actions: {
-                setFeatures: () => {}
-            }
-        };
-    },
-    getValidator(infoFormat) {
+    };
+
+    static defaultProps = {
+        display: "accordion",
+        responses: [],
+        missingRequests: 0,
+        actions: {
+            setFeatures: () => {}
+        }
+    };
+
+    getValidator = (infoFormat) => {
         const infoFormats = MapInfoUtils.getAvailableInfoFormat();
         switch (infoFormat) {
             case infoFormats.JSON:
@@ -74,11 +75,12 @@ const TopologyInfoViewer = React.createClass({
             default:
                 return null;
         }
-    },
+    };
+
     /**
      * Render a single layer feature info
      */
-    renderInfoPage(layerId) {
+    renderInfoPage = (layerId) => {
         let columns;
         if (this.props.infoTopologyResponse &&
             this.props.infoTopologyResponse[layerId] &&
@@ -119,20 +121,24 @@ const TopologyInfoViewer = React.createClass({
                 </div>
             </div>
         );
-    },
-    renderLeftButton() {
+    };
+
+    renderLeftButton = () => {
         return <a style={{"float": "left"}} onClick={() => {this.refs.container.swipe.prev(); }}><Glyphicon glyph="chevron-left" /></a>;
-    },
-    renderRightButton() {
+    };
+
+    renderRightButton = () => {
         return <a style={{"float": "right"}} onClick={() => {this.refs.container.swipe.next(); }}><Glyphicon glyph="chevron-right" /></a>;
-    },
-    renderPageHeader(layerId) {
+    };
+
+    renderPageHeader = (layerId) => {
         return (<span>{this.props.display === "accordion" ? "" : this.renderLeftButton()} <span>{this.props.topologyConfig ? this.props.topologyConfig[layerId].layerTitle : ""}</span> {this.props.display === "accordion" ? "" : this.renderRightButton()}</span>);
-    },
+    };
+
     /**
      * render all the feature info pages
      */
-    renderPages(responses) {
+    renderPages = (responses) => {
         if (this.props.missingRequests === 0 && responses.length === 0) {
             return (
                 <Alert bsStyle={"danger"}>
@@ -154,7 +160,8 @@ const TopologyInfoViewer = React.createClass({
                 </Panel>
             );
         });
-    },
+    };
+
     render() {
         const Container = this.props.display === "accordion" ? Accordion : ReactSwipe;
         let validResponses = [];
@@ -173,6 +180,6 @@ const TopologyInfoViewer = React.createClass({
             </div>
         );
     }
-});
+}
 
 module.exports = TopologyInfoViewer;

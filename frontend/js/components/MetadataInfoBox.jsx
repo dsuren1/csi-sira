@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -12,72 +13,70 @@ const Draggable = require('react-draggable');
 // const Message = require('../../MapStore2/web/client/components/I18N/Message');
 const I18N = require('../../MapStore2/web/client/components/I18N/I18N');
 
-const MetadataInfoBox = React.createClass({
-    propTypes: {
-        show: React.PropTypes.string,
-        showButtonLegend: React.PropTypes.string,
-        openLegendPanel: React.PropTypes.bool,
-        panelTitle: React.PropTypes.string,
-        header: React.PropTypes.string,
-        panelStyle: React.PropTypes.object,
-        title: React.PropTypes.string,
-        text: React.PropTypes.string,
-        dataProvider: React.PropTypes.string,
-        urlMetadato: React.PropTypes.string,
-        dataUrl: React.PropTypes.string,
-        numDatasetObjectCalc: React.PropTypes.number,
-        urlWMS: React.PropTypes.array,
-        urlWFS: React.PropTypes.array,
-        urlLegend: React.PropTypes.array,
-        error: React.PropTypes.string,
-        closePanel: React.PropTypes.func,
-        toggleLegendPanel: React.PropTypes.func,
-        loadLegend: React.PropTypes.func,
-        loadMetadataInfo: React.PropTypes.func
-    },
+class MetadataInfoBox extends React.Component {
+    static propTypes = {
+        show: PropTypes.string,
+        showButtonLegend: PropTypes.string,
+        openLegendPanel: PropTypes.bool,
+        panelTitle: PropTypes.string,
+        header: PropTypes.string,
+        panelStyle: PropTypes.object,
+        title: PropTypes.string,
+        text: PropTypes.string,
+        dataProvider: PropTypes.string,
+        urlMetadato: PropTypes.string,
+        dataUrl: PropTypes.string,
+        numDatasetObjectCalc: PropTypes.number,
+        urlWMS: PropTypes.array,
+        urlWFS: PropTypes.array,
+        urlLegend: PropTypes.array,
+        error: PropTypes.string,
+        closePanel: PropTypes.func,
+        toggleLegendPanel: PropTypes.func,
+        loadLegend: PropTypes.func,
+        loadMetadataInfo: PropTypes.func
+    };
 
-    getDefaultProps() {
-        return {
-            show: 'none',
-            showButtonLegend: 'none',
-            openLegendPanel: false,
-            panelTitle: "",
-            error: '',
-            title: '',
-            text: '',
-            dataUrl: '',
-            urlWMS: [],
-            urlWFS: [],
-            urlLegend: [],
-            numDatasetObjectCalc: 0,
-            dataProvider: '',
-            urlMetadato: '',
-            header: "featuregrid.header",
-            closePanel: () => {},
-            loadMetadataInfo: () => {},
-            toggleLegendPanel: () => {},
-            loadLegend: () => {},
-            panelStyle: {
-                      height: "500px",
-                      width: "450px",
-                      zIndex: 100,
-                      position: "absolute",
-                      overflow: "auto"
-                  }
-        };
-    },
+    static defaultProps = {
+        show: 'none',
+        showButtonLegend: 'none',
+        openLegendPanel: false,
+        panelTitle: "",
+        error: '',
+        title: '',
+        text: '',
+        dataUrl: '',
+        urlWMS: [],
+        urlWFS: [],
+        urlLegend: [],
+        numDatasetObjectCalc: 0,
+        dataProvider: '',
+        urlMetadato: '',
+        header: "featuregrid.header",
+        closePanel: () => {},
+        loadMetadataInfo: () => {},
+        toggleLegendPanel: () => {},
+        loadLegend: () => {},
+        panelStyle: {
+                  height: "500px",
+                  width: "450px",
+                  zIndex: 100,
+                  position: "absolute",
+                  overflow: "auto"
+              }
+    };
 
-    onOpenLegendPanel() {
+    onOpenLegendPanel = () => {
         this.props.loadLegend(this.props.urlWMS, this.props.urlLegend);
-    },
+    };
 
-    renderLegend() {
+    renderLegend = () => {
         return this.props.urlLegend.map((url) => {
             return (<Image src={url} />);
         });
-    },
+    };
 
-    renderError() {
+    renderError = () => {
         if (this.props.error) {
             return (
               <p className="infobox-error">
@@ -86,9 +85,9 @@ const MetadataInfoBox = React.createClass({
             );
         }
         return ('');
-    },
+    };
 
-    renderSingleLegend(legends) {
+    renderSingleLegend = (legends) => {
         if (legends) {
             return (
               legends.map((legend, index) =>
@@ -99,9 +98,9 @@ const MetadataInfoBox = React.createClass({
             ));
         }
         return ('');
-    },
+    };
 
-    renderLegends() {
+    renderLegends = () => {
         if (this.props.urlLegend) {
             return (
               this.props.urlLegend.map((urlObject, index) =>
@@ -112,7 +111,7 @@ const MetadataInfoBox = React.createClass({
         ));
         }
         return ('');
-    },
+    };
 
     render() {
         let renderWmsUrl = [];
@@ -188,5 +187,6 @@ const MetadataInfoBox = React.createClass({
           </Draggable>
         );
     }
-});
+}
+
 module.exports = MetadataInfoBox;

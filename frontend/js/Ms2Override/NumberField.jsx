@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -13,57 +14,58 @@ const numberLocalizer = require('react-widgets/lib/localizers/simple-number');
 numberLocalizer();
 const {NumberPicker} = require('react-widgets');
 
-const NumberField = React.createClass({
-    propTypes: {
-        operator: React.PropTypes.string,
-        fieldName: React.PropTypes.string,
-        fieldRowId: React.PropTypes.number,
-        attType: React.PropTypes.string,
-        fieldValue: React.PropTypes.oneOfType([
-            React.PropTypes.number,
-            React.PropTypes.object]),
-        fieldException: React.PropTypes.oneOfType([
-            React.PropTypes.object,
-            React.PropTypes.bool,
-            React.PropTypes.string
+class NumberField extends React.Component {
+    static propTypes = {
+        operator: PropTypes.string,
+        fieldName: PropTypes.string,
+        fieldRowId: PropTypes.number,
+        attType: PropTypes.string,
+        fieldValue: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.object]),
+        fieldException: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.bool,
+            PropTypes.string
         ]),
-        onUpdateField: React.PropTypes.func,
-        onUpdateExceptionField: React.PropTypes.func,
-        isRequired: React.PropTypes.bool,
-        label: React.PropTypes.string,
-        lowLabel: React.PropTypes.string,
-        upLabel: React.PropTypes.string,
-        options: React.PropTypes.shape({
-            format: React.PropTypes.string,
-            min: React.PropTypes.number,
-            max: React.PropTypes.number,
-            step: React.PropTypes.number,
-            precision: React.PropTypes.number
+        onUpdateField: PropTypes.func,
+        onUpdateExceptionField: PropTypes.func,
+        isRequired: PropTypes.bool,
+        label: PropTypes.string,
+        lowLabel: PropTypes.string,
+        upLabel: PropTypes.string,
+        options: PropTypes.shape({
+            format: PropTypes.string,
+            min: PropTypes.number,
+            max: PropTypes.number,
+            step: PropTypes.number,
+            precision: PropTypes.number
         }),
-        style: React.PropTypes.object
-    },
-    contextTypes: {
-        messages: React.PropTypes.object
-    },
-    getDefaultProps() {
-        return {
-            style: {marginBottom: "15px", borderColor: "#dedede"},
-            operator: "=",
-            fieldName: null,
-            fieldRowId: null,
-            attType: "number",
-            fieldValue: null,
-            fieldException: null,
-            isRequired: false,
-            label: null,
-            lowLabel: null,
-            upLabel: null,
-            options: {},
-            onUpdateField: () => {},
-            onUpdateExceptionField: () => {}
-        };
-    },
-    renderPicker(style) {
+        style: PropTypes.object
+    };
+
+    static contextTypes = {
+        messages: PropTypes.object
+    };
+
+    static defaultProps = {
+        style: {marginBottom: "15px", borderColor: "#dedede"},
+        operator: "=",
+        fieldName: null,
+        fieldRowId: null,
+        attType: "number",
+        fieldValue: null,
+        fieldException: null,
+        isRequired: false,
+        label: null,
+        lowLabel: null,
+        upLabel: null,
+        options: {},
+        onUpdateField: () => {},
+        onUpdateExceptionField: () => {}
+    };
+
+    renderPicker = (style) => {
         let numberFormat = '#.###.###,###';
         let label = this.props.label ? (<label>{this.props.label}</label>) : null;
         let lowLabel = this.props.lowLabel ? (<label>{this.props.lowLabel}</label>) : null;
@@ -107,7 +109,8 @@ const NumberField = React.createClass({
                     </Col>
                 </Row>
             );
-    },
+    };
+
     render() {
         let style = this.props.style;
         if (this.props.fieldException) {
@@ -125,8 +128,9 @@ const NumberField = React.createClass({
             {this.renderPicker(style)}
             </OverlayTrigger>
             );
-    },
-    changeNumber(value) {
+    }
+
+    changeNumber = (value) => {
         if (this.props.operator === "><") {
             if ((value.lowBound !== null && value.lowBound !== undefined) && ( value.upBound !== null && value.upBound !== undefined) && value.lowBound >= value.upBound) {
                 this.props.onUpdateExceptionField(this.props.fieldRowId, LocaleUtils.getMessageById(this.context.messages, "queryform.attributefilter.numberfield.wrong_range"));
@@ -141,7 +145,7 @@ const NumberField = React.createClass({
             }
         }
         this.props.onUpdateField(this.props.fieldRowId, this.props.fieldName, value, this.props.attType);
-    }
-});
+    };
+}
 
 module.exports = NumberField;

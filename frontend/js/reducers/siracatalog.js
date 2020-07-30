@@ -17,7 +17,7 @@ const { TOGGLE_SIRA_NODE,
         SET_NODE_IN_USE} = require('../actions/siracatalog');
 const {TILES_LOADED} = require('../actions/mosaictile');
 const assign = require('object-assign');
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 
 
 const normalizeCategories = function(categories, nodes) {

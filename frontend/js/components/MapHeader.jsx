@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -38,17 +39,17 @@ const LoginPanel = connect((state) => ({
     }
 })(require('./LoginPanel'));
 
-const MapHeader = React.createClass({
-    propTypes: {
-        onBack: React.PropTypes.func,
-        onHome: React.PropTypes.func
-    },
-    getDefaultProps() {
-        return {
-            onBack: () => {},
-            onHome: () => {}
-        };
-    },
+class MapHeader extends React.Component {
+    static propTypes = {
+        onBack: PropTypes.func,
+        onHome: PropTypes.func
+    };
+
+    static defaultProps = {
+        onBack: () => {},
+        onHome: () => {}
+    };
+
     render() {
         return (
             <div id="header-servizio" className="container-fluid">
@@ -94,6 +95,6 @@ const MapHeader = React.createClass({
             </div>
         );
     }
-});
+}
 
 module.exports = MapHeader;

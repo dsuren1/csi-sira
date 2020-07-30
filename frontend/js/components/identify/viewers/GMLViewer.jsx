@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -13,47 +14,52 @@ const TemplateUtils = require('../../../utils/TemplateUtils');
 
 const {isString} = require('lodash');
 
-const GMLViewer = React.createClass({
-    propTypes: {
-        params: React.PropTypes.object,
-        profile: React.PropTypes.string,
-        response: React.PropTypes.string,
-        contentConfig: React.PropTypes.object,
-        detailOpen: React.PropTypes.bool,
-        templateProfile: React.PropTypes.string,
-        layerId: React.PropTypes.string,
-        actions: React.PropTypes.shape({
-            onDetail: React.PropTypes.func,
-            onShowDetail: React.PropTypes.func,
-            loadTemplate: React.PropTypes.func
+class GMLViewer extends React.Component {
+    static propTypes = {
+        params: PropTypes.object,
+        profile: PropTypes.string,
+        response: PropTypes.string,
+        contentConfig: PropTypes.object,
+        detailOpen: PropTypes.bool,
+        templateProfile: PropTypes.string,
+        layerId: PropTypes.string,
+        actions: PropTypes.shape({
+            onDetail: PropTypes.func,
+            onShowDetail: PropTypes.func,
+            loadTemplate: PropTypes.func
         })
-    },
-    getDefaultProps() {
-        return {
-            templateProfile: 'default'
-        };
-    },
-    loadTemplate(props) {
+    };
+
+    static defaultProps = {
+        templateProfile: 'default'
+    };
+
+    loadTemplate = (props) => {
         if (props.contentConfig.template && props.contentConfig.template.needsLoading && props.contentConfig.detailsConfig && props.contentConfig.detailsConfig.featureinfo.templateURL) {
             this.props.actions.loadTemplate(props.contentConfig.layerId, props.contentConfig.detailsConfig.featureinfo.templateURL);
         }
-    },
+    };
+
     componentDidMount() {
         this.loadTemplate(this.props);
 
-    },
+    }
+
     componentWillReceiveProps(newProps) {
         this.loadTemplate(newProps);
-    },
+    }
+
     shouldComponentUpdate(nextProps) {
         return (nextProps.response !== this.props.response) ||
           nextProps.contentConfig.template !== this.props.contentConfig.template;
-    },
-    onCellClicked(node) {
+    }
+
+    onCellClicked = (node) => {
         if (node.colIndex === 0 && node.colDef.id) {
             this.goToDetail(node.data, node.colDef.field);
         }
-    },
+    };
+
     render() {
         const xml = this.props.response;
         // const authParam = this.props.authParam;
@@ -74,8 +80,9 @@ const GMLViewer = React.createClass({
                 model={model}
                 onCellClicked={this.onCellClicked}/> : null
         );
-    },
-    goToDetail(data, idFieldName) {
+    }
+
+    goToDetail = (data, idFieldName) => {
         let url = this.props.contentConfig.detailsConfig.card.service.url;
         let urlParams = this.props.contentConfig.detailsConfig.card.service.params;
         for (let param in urlParams) {
@@ -94,7 +101,7 @@ const GMLViewer = React.createClass({
         if (!this.props.detailOpen) {
             this.props.actions.onShowDetail();
         }
-    }
-});
+    };
+}
 
 module.exports = GMLViewer;

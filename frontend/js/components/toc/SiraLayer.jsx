@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -17,49 +18,49 @@ const SiraSettings = require('./fragments/SiraSettings');
 const ConfirmButton = require('../../../MapStore2/web/client/components/buttons/ConfirmButton');
 const {Glyphicon} = require('react-bootstrap');
 
-var DefaultLayer = React.createClass({
-    propTypes: {
-        node: React.PropTypes.object,
-        settings: React.PropTypes.object,
-        propertiesChangeHandler: React.PropTypes.func,
-        onToggle: React.PropTypes.func,
-        onSettings: React.PropTypes.func,
-        style: React.PropTypes.object,
-        sortableStyle: React.PropTypes.object,
-        hideSettings: React.PropTypes.func,
-        updateSettings: React.PropTypes.func,
-        updateNode: React.PropTypes.func,
-        removeNode: React.PropTypes.func,
-        activateLegendTool: React.PropTypes.bool,
-        activateSettingsTool: React.PropTypes.bool,
-        settingsText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-        opacityText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-        saveText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-        closeText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-        modalOptions: React.PropTypes.object,
-        settingsOptions: React.PropTypes.object,
-        visibilityCheckType: React.PropTypes.string,
-        groups: React.PropTypes.array,
-        expandFilterPanel: React.PropTypes.func,
-        searchAll: React.PropTypes.func
-    },
-    getDefaultProps() {
-        return {
-            style: {},
-            sortableStyle: {},
-            propertiesChangeHandler: () => {},
-            onToggle: () => {},
-            onSettings: () => {},
-            activateLegendTool: false,
-            activateSettingsTool: false,
-            modalOptions: {},
-            settingsOptions: {},
-            visibilityCheckType: "glyph",
-            expandFilterPanel: () => {},
-            searchAll: () => {}
-        };
-    },
-    renderCollapsible() {
+class DefaultLayer extends React.Component {
+    static propTypes = {
+        node: PropTypes.object,
+        settings: PropTypes.object,
+        propertiesChangeHandler: PropTypes.func,
+        onToggle: PropTypes.func,
+        onSettings: PropTypes.func,
+        style: PropTypes.object,
+        sortableStyle: PropTypes.object,
+        hideSettings: PropTypes.func,
+        updateSettings: PropTypes.func,
+        updateNode: PropTypes.func,
+        removeNode: PropTypes.func,
+        activateLegendTool: PropTypes.bool,
+        activateSettingsTool: PropTypes.bool,
+        settingsText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+        opacityText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+        saveText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+        closeText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+        modalOptions: PropTypes.object,
+        settingsOptions: PropTypes.object,
+        visibilityCheckType: PropTypes.string,
+        groups: PropTypes.array,
+        expandFilterPanel: PropTypes.func,
+        searchAll: PropTypes.func
+    };
+
+    static defaultProps = {
+        style: {},
+        sortableStyle: {},
+        propertiesChangeHandler: () => {},
+        onToggle: () => {},
+        onSettings: () => {},
+        activateLegendTool: false,
+        activateSettingsTool: false,
+        modalOptions: {},
+        settingsOptions: {},
+        visibilityCheckType: "glyph",
+        expandFilterPanel: () => {},
+        searchAll: () => {}
+    };
+
+    renderCollapsible = () => {
         if (this.props.settings && this.props.settings.node === this.props.node.id) {
             return (<SiraSettings
                 position="collapsible"
@@ -73,8 +74,9 @@ var DefaultLayer = React.createClass({
             // <WMSLegend position="collapsible"/>;
         }
         return [];
-    },
-    renderTools() {
+    };
+
+    renderTools = () => {
         const tools = [];
         tools.push(
             <ConfirmButton key="removelayer"
@@ -114,7 +116,8 @@ var DefaultLayer = React.createClass({
             }
         }
         return tools;
-    },
+    };
+
     render() {
         let {children, propertiesChangeHandler, onToggle, ...other } = this.props;
         return (
@@ -125,12 +128,13 @@ var DefaultLayer = React.createClass({
                 {this.renderTools()}
             </Node>
         );
-    },
-    showInfoBox() {
+    }
+
+    showInfoBox = () => {
             if (this.props.node && this.props.node.siraId) {
                 this.props.onToggle(this.props.node.siraId);
             }
-        }
-});
+        };
+}
 
 module.exports = DefaultLayer;

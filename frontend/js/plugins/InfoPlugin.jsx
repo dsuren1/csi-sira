@@ -16,7 +16,7 @@ const FeatureInfoFormatSelector = connect((state) => ({
     infoFormat: state.mapInfo && state.mapInfo.infoFormat
 }), {
     onInfoFormatChange: changeMapInfoFormat
-})(require("../../MapStore2/web/client/components/misc/FeatureInfoFormatSelector"));
+})(require("../../MapStore2/web/client/components/misc/FeatureInfoFormatSelector").default);
 
 const InfoPlugin = connect((state) => ({
     id: "mapInfoButton",

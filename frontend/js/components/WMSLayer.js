@@ -7,7 +7,7 @@
  */
 
 var Layers = require('../../MapStore2/web/client/utils/openlayers/Layers');
-var ol = require('openlayers');
+var ol = require('ol');
 var objectAssign = require('object-assign');
 const CoordinatesUtils = require('../../MapStore2/web/client/utils/CoordinatesUtils');
 

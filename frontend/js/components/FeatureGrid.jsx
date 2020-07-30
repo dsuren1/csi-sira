@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const {connect} = require('react-redux');
 const {isObject} = require('lodash');
@@ -47,122 +48,122 @@ const GridCellNumber = require('./GridCellNumber');
 const Spinner = require('react-spinkit');
 const assign = require('object-assign');
 
-const SiraGrid = React.createClass({
-    propTypes: {
-        open: React.PropTypes.bool,
-        detailOpen: React.PropTypes.bool,
-        expanded: React.PropTypes.bool,
-        header: React.PropTypes.string,
-        features: React.PropTypes.oneOfType([ React.PropTypes.array, React.PropTypes.object]),
-        exporterConfig: React.PropTypes.object,
-        detailsConfig: React.PropTypes.object,
-        columnsDef: React.PropTypes.array,
-        map: React.PropTypes.object,
-        loadingGrid: React.PropTypes.bool,
-        exportCsvMimeType: React.PropTypes.string,
-        loadingGridError: React.PropTypes.oneOfType([
-            React.PropTypes.string,
-            React.PropTypes.object
+class SiraGrid extends React.Component {
+    static propTypes = {
+        open: PropTypes.bool,
+        detailOpen: PropTypes.bool,
+        expanded: PropTypes.bool,
+        header: PropTypes.string,
+        features: PropTypes.oneOfType([ PropTypes.array, PropTypes.object]),
+        exporterConfig: PropTypes.object,
+        detailsConfig: PropTypes.object,
+        columnsDef: PropTypes.array,
+        map: PropTypes.object,
+        loadingGrid: PropTypes.bool,
+        exportCsvMimeType: PropTypes.string,
+        loadingGridError: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.object
         ]),
-        initWidth: React.PropTypes.number,
-        params: React.PropTypes.object,
+        initWidth: PropTypes.number,
+        params: PropTypes.object,
         // featureGrigConfigUrl: React.PropTypes.string,
-        profile: React.PropTypes.string,
-        onDetail: React.PropTypes.func,
-        onShowDetail: React.PropTypes.func,
-        toggleSiraControl: React.PropTypes.func,
-        changeMapView: React.PropTypes.func,
+        profile: PropTypes.string,
+        onDetail: PropTypes.func,
+        onShowDetail: PropTypes.func,
+        toggleSiraControl: PropTypes.func,
+        changeMapView: PropTypes.func,
         // loadFeatureGridConfig: React.PropTypes.func,
-        onExpandFilterPanel: React.PropTypes.func,
-        selectFeatures: React.PropTypes.func,
-        totalFeatures: React.PropTypes.number,
-        pagination: React.PropTypes.bool,
-        modeBackToDataset: React.PropTypes.bool,
-        backToDataset: React.PropTypes.func,
-        filterFields: React.PropTypes.array,
-        groupFields: React.PropTypes.array,
-        spatialField: React.PropTypes.object,
-        featureTypeName: React.PropTypes.string,
-        ogcVersion: React.PropTypes.string,
-        onQuery: React.PropTypes.func,
-        searchUrl: React.PropTypes.string,
-        dataSourceOptions: React.PropTypes.object,
-        withMap: React.PropTypes.bool.isRequired,
-        onConfigureQuery: React.PropTypes.func,
-        attributes: React.PropTypes.array,
-        cleanError: React.PropTypes.func,
-        selectAllToggle: React.PropTypes.func,
-        templateProfile: React.PropTypes.string,
-        zoomToFeatureAction: React.PropTypes.func,
-        backToSearch: React.PropTypes.string,
-        gridType: React.PropTypes.string,
-        setExportParams: React.PropTypes.func,
-        maxFeatures: React.PropTypes.number,
-        nameSpaces: React.PropTypes.object,
-        exporter: React.PropTypes.bool.isRequired,
-        fullScreen: React.PropTypes.bool.isRequired,
-        selectAll: React.PropTypes.bool.isRequired,
-        configureExporter: React.PropTypes.func,
-        setTreeFeatureType: React.PropTypes.func,
-        closeTree: React.PropTypes.func,
-        datasetHeader: React.PropTypes.string,
-        featureTypeNameLabel: React.PropTypes.string
-    },
-    contextTypes: {
-        messages: React.PropTypes.object
-    },
-    getInitialState() {
-        return {};
-    },
-    getDefaultProps() {
-        return {
-            open: true,
-            detailOpen: true,
-            loadingGrid: false,
-            modeBackToDataset: false,
-            loadingGridError: null,
-            attributes: [],
-            profile: null,
-            expanded: true,
-            header: "featuregrid.header",
-            datasetHeader: "queryform.form.dataset_header",
-            features: [],
-            featureTypeName: null,
-            ogcVersion: "2.0",
-            detailsConfig: {},
-            columnsDef: [],
-            pagination: false,
-            params: {},
-            groupFields: [],
-            filterFields: [],
-            spatialField: {},
-            searchUrl: null,
-            dataSourceOptions: {
-                rowCount: -1,
-                pageSize: 20
-            },
-            initWidth: 600,
-            withMap: true,
-            templateProfile: 'default',
-            backToSearch: "featuregrid.backtosearch",
-            gridType: "search",
-            exporter: true,
-            fullScreen: false,
-            selectAll: true,
-            featureTypeNameLabel: null,
-            onDetail: () => {},
-            onShowDetail: () => {},
-            toggleSiraControl: () => {},
-            changeMapView: () => {},
-            // loadFeatureGridConfig: () => {},
-            onExpandFilterPanel: () => {},
-            selectFeatures: () => {},
-            onQuery: () => {},
-            onConfigureQuery: () => {},
-            cleanError: () => {},
-            configureExporter: () => {}
-        };
-    },
+        onExpandFilterPanel: PropTypes.func,
+        selectFeatures: PropTypes.func,
+        totalFeatures: PropTypes.number,
+        pagination: PropTypes.bool,
+        modeBackToDataset: PropTypes.bool,
+        backToDataset: PropTypes.func,
+        filterFields: PropTypes.array,
+        groupFields: PropTypes.array,
+        spatialField: PropTypes.object,
+        featureTypeName: PropTypes.string,
+        ogcVersion: PropTypes.string,
+        onQuery: PropTypes.func,
+        searchUrl: PropTypes.string,
+        dataSourceOptions: PropTypes.object,
+        withMap: PropTypes.bool.isRequired,
+        onConfigureQuery: PropTypes.func,
+        attributes: PropTypes.array,
+        cleanError: PropTypes.func,
+        selectAllToggle: PropTypes.func,
+        templateProfile: PropTypes.string,
+        zoomToFeatureAction: PropTypes.func,
+        backToSearch: PropTypes.string,
+        gridType: PropTypes.string,
+        setExportParams: PropTypes.func,
+        maxFeatures: PropTypes.number,
+        nameSpaces: PropTypes.object,
+        exporter: PropTypes.bool.isRequired,
+        fullScreen: PropTypes.bool.isRequired,
+        selectAll: PropTypes.bool.isRequired,
+        configureExporter: PropTypes.func,
+        setTreeFeatureType: PropTypes.func,
+        closeTree: PropTypes.func,
+        datasetHeader: PropTypes.string,
+        featureTypeNameLabel: PropTypes.string
+    };
+
+    static contextTypes = {
+        messages: PropTypes.object
+    };
+
+    static defaultProps = {
+        open: true,
+        detailOpen: true,
+        loadingGrid: false,
+        modeBackToDataset: false,
+        loadingGridError: null,
+        attributes: [],
+        profile: null,
+        expanded: true,
+        header: "featuregrid.header",
+        datasetHeader: "queryform.form.dataset_header",
+        features: [],
+        featureTypeName: null,
+        ogcVersion: "2.0",
+        detailsConfig: {},
+        columnsDef: [],
+        pagination: false,
+        params: {},
+        groupFields: [],
+        filterFields: [],
+        spatialField: {},
+        searchUrl: null,
+        dataSourceOptions: {
+            rowCount: -1,
+            pageSize: 20
+        },
+        initWidth: 600,
+        withMap: true,
+        templateProfile: 'default',
+        backToSearch: "featuregrid.backtosearch",
+        gridType: "search",
+        exporter: true,
+        fullScreen: false,
+        selectAll: true,
+        featureTypeNameLabel: null,
+        onDetail: () => {},
+        onShowDetail: () => {},
+        toggleSiraControl: () => {},
+        changeMapView: () => {},
+        // loadFeatureGridConfig: () => {},
+        onExpandFilterPanel: () => {},
+        selectFeatures: () => {},
+        onQuery: () => {},
+        onConfigureQuery: () => {},
+        cleanError: () => {},
+        configureExporter: () => {}
+    };
+
+    state = {};
+
     componentWillMount() {
         const hOffset = this.props.fullScreen ? 150 : 181;
         let height = getWindowSize().maxHeight - hOffset;
@@ -176,14 +177,16 @@ const SiraGrid = React.createClass({
                 "startIndex": 0
                 });
         }
-    },
+    }
+
     componentWillReceiveProps(nextProps) {
         const hOffset = nextProps.fullScreen ? 150 : 181;
         if (nextProps.initWidth !== this.props.initWidth) {
             let height = getWindowSize().maxHeight - hOffset;
             this.setState({width: nextProps.initWidth - 30, height});
         }
-    },
+    }
+
     shouldComponentUpdate(nextProps) {
         return Object.keys(this.props).reduce((prev, prop) => {
             if ( !prev && (prop !== 'map' && !isEqual(this.props[prop], nextProps[prop]))) {
@@ -191,7 +194,8 @@ const SiraGrid = React.createClass({
             }
             return prev;
         }, false);
-    },
+    }
+
     componentWillUpdate(nextProps) {
         if (!nextProps.loadingGrid && nextProps.pagination && (nextProps.dataSourceOptions !== this.props.dataSourceOptions)) {
             this.dataSource = this.getDataSource(nextProps.dataSourceOptions);
@@ -201,8 +205,9 @@ const SiraGrid = React.createClass({
             this.featureLoaded.successCallback(rowsThisPage, nextProps.totalFeatures);
             this.featureLoaded = null;
         }
-    },
-    onGridClose(filter) {
+    }
+
+    onGridClose = (filter) => {
         this.props.selectFeatures([]);
         if (this.props.selectAllToggle) {
             this.props.selectAllToggle();
@@ -214,23 +219,28 @@ const SiraGrid = React.createClass({
         if (this.props.modeBackToDataset && !filter) {
             this.props.backToDataset();
         }
-    },
-    onResize(event, resize) {
+    };
+
+    onResize = (event, resize) => {
         let size = resize.size;
         this.setState({width: size.width, height: size.height});
 
-    },
-    getRequestId(params) {
+    };
+
+    getRequestId = (params) => {
         return `${params.startRow}_${params.endRow}_${params.sortModel.map((m) => `${m.colId}_${m.sort}` ).join('_')}`;
-    },
-    getSortAttribute(colId) {
+    };
+
+    getSortAttribute = (colId) => {
         let col = head(this.props.columnsDef.filter((c) => colId === `properties.${c.field}`));
         return col && col.sortAttribute ? col.sortAttribute : '';
-    },
-    getSortOptions(params) {
+    };
+
+    getSortOptions = (params) => {
         return params.sortModel.reduce((o, m) => ({sortBy: this.getSortAttribute(m.colId), sortOrder: m.sort}), {});
-    },
-    getFeatures(params) {
+    };
+
+    getFeatures = (params) => {
         if (!this.props.loadingGrid) {
             let reqId = this.getRequestId(params);
             let rowsThisPage = this.props.features[reqId];
@@ -255,16 +265,18 @@ const SiraGrid = React.createClass({
                 this.props.onQuery(this.props.searchUrl, filter, this.props.params, reqId);
             }
         }
-    },
-    getDataSource(dataSourceOptions) {
+    };
+
+    getDataSource = (dataSourceOptions) => {
         return {
             rowCount: dataSourceOptions.rowCount,
             getRows: this.getFeatures,
             pageSize: dataSourceOptions.pageSize,
             overflowSize: 20
         };
-    },
-    renderHeader() {
+    };
+
+    renderHeader = () => {
         const header = LocaleUtils.getMessageById(this.context.messages, this.props.header);
 
         return (
@@ -281,8 +293,9 @@ const SiraGrid = React.createClass({
                 </Grid>
             </div>
         );
-    },
-    renderLoadingException(loadingError, msg) {
+    };
+
+    renderLoadingException = (loadingError, msg) => {
         let exception;
         if (isObject(loadingError)) {
             exception = loadingError.status +
@@ -307,8 +320,9 @@ const SiraGrid = React.createClass({
                 </Modal.Footer>
             </Modal>
         );
-    },
-    renderDatasetHeader() {
+    };
+
+    renderDatasetHeader = () => {
         const datasetHeader = LocaleUtils.getMessageById(this.context.messages, this.props.datasetHeader);
         return (
             <div className="dhContainer">
@@ -316,7 +330,8 @@ const SiraGrid = React.createClass({
                 <h4 className="ftheader">{this.props.featureTypeNameLabel}</h4>
             </div>
         );
-    },
+    };
+
     render() {
         let loadingError = this.props.loadingGridError;
         if (loadingError) {
@@ -429,8 +444,9 @@ const SiraGrid = React.createClass({
         }
 
         return null;
-    },
-    selectAll(select) {
+    }
+
+    selectAll = (select) => {
         if (select) {
             let filterObj = this.props.gridType === 'search' ? {
                 groupFields: this.props.groupFields,
@@ -445,14 +461,16 @@ const SiraGrid = React.createClass({
         } else {
             this.props.selectAllToggle();
         }
-    },
-    selectFeatures(features) {
+    };
+
+    selectFeatures = (features) => {
         if (this.props.selectAllToggle) {
             this.props.selectAllToggle();
         }
         this.props.selectFeatures(features);
-    },
-    goToDetail(params) {
+    };
+
+    goToDetail = (params) => {
         this.props.setTreeFeatureType(undefined);
         this.props.closeTree();
 
@@ -474,8 +492,9 @@ const SiraGrid = React.createClass({
         if (!this.props.detailOpen) {
             this.props.onShowDetail();
         }
-    },
-    exportFeatures(api) {
+    };
+
+    exportFeatures = (api) => {
         const {exporterConfig, configureExporter, toggleSiraControl, maxFeatures, gridType,
                 groupFields, filterFields, spatialField} = this.props;
         if ( exporterConfig ) {
@@ -507,8 +526,8 @@ const SiraGrid = React.createClass({
             return cols;
         }, []);
         this.props.setExportParams({filter, features, columns, featureType: this.props.featureTypeName});
-    }
-});
+    };
+}
 
 module.exports = connect((state) => {
     const activeConfig = state.siradec.activeFeatureType && state.siradec.configOggetti[state.siradec.activeFeatureType] || {};

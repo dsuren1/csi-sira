@@ -40,7 +40,7 @@ const map = mapConfigHistory(require('../../MapStore2/web/client/reducers/map'))
 const layers = require('../reducers/siraLayers');
 const mapConfig = require('../reducers/SiraMapConfig');
 
-const DebugUtils = require('../../MapStore2/web/client/utils/DebugUtils');
+const DebugUtils = require('../../MapStore2/web/client/utils/DebugUtils').default;
 const {combineReducers} = require('../../MapStore2/web/client/utils/PluginsUtils');
 
 const LayersUtils = require('../../MapStore2/web/client/utils/LayersUtils');

@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -22,76 +23,78 @@ const TemplateUtils = require('../../utils/TemplateUtils');
 const {getWindowSize} = require('../../../MapStore2/web/client/utils/AgentUtils');
 
 const Draggable = require('react-draggable');
-const SiraTree = require('../tree/SiraTree');
+const SiraTree = require('../tree/SiraTree').default;
 
 require("./card.css");
 
-const Card = React.createClass({
-    propTypes: {
-        card: React.PropTypes.shape({
-            template: React.PropTypes.oneOfType([
-                    React.PropTypes.string,
-                    React.PropTypes.func]),
-            loadingCardTemplateError: React.PropTypes.oneOfType([
-                    React.PropTypes.string,
-                    React.PropTypes.object]),
-            xml: React.PropTypes.oneOfType([
-                    React.PropTypes.string])
+class Card extends React.Component {
+    static propTypes = {
+        card: PropTypes.shape({
+            template: PropTypes.oneOfType([
+                    PropTypes.string,
+                    PropTypes.func]),
+            loadingCardTemplateError: PropTypes.oneOfType([
+                    PropTypes.string,
+                    PropTypes.object]),
+            xml: PropTypes.oneOfType([
+                    PropTypes.string])
         }),
-        authParam: React.PropTypes.object,
-        profile: React.PropTypes.array,
-        open: React.PropTypes.bool,
-        withMap: React.PropTypes.bool,
-        draggable: React.PropTypes.bool,
+        authParam: PropTypes.object,
+        profile: PropTypes.array,
+        open: PropTypes.bool,
+        withMap: PropTypes.bool,
+        draggable: PropTypes.bool,
         // model: React.PropTypes.object,
         // impiantoModel: React.PropTypes.object,
-        toggleDetail: React.PropTypes.func,
-        generatePDF: React.PropTypes.func,
-        configureTree: React.PropTypes.func,
-        treeTemplate: React.PropTypes.string
-    },
-    getDefaultProps() {
-        return {
-            card: {
-                template: "",
-                xml: null,
-                loadingCardTemplateError: null
-            },
-            withMap: true,
-            authParam: null,
-            open: false,
-            draggable: true,
-            profile: [],
-            // model: {},
-            toggleDetail: () => {}
-        };
-    },
-     renderLoadTemplateException() {
-        let exception = this.props.card.loadingCardTemplateError;
-        if (isObject(exception)) {
-            exception = exception.status + ": " + exception.data;
-        }
+        toggleDetail: PropTypes.func,
+        generatePDF: PropTypes.func,
+        configureTree: PropTypes.func,
+        treeTemplate: PropTypes.string
+    };
 
-        return (
-            <Modal
-                show={ (exception) ? true : false}
-                bsSize="small"
-                onHide={this.props.toggleDetail} >
-                <Modal.Header closeButton>
-                    <Modal.Title>Data Exception</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className="mapstore-error">{exception}</div>
-                </Modal.Body>
-                <Modal.Footer>
-                </Modal.Footer>
-            </Modal>
-        );
-    },
-    renderTree() {
+    static defaultProps = {
+        card: {
+            template: "",
+            xml: null,
+            loadingCardTemplateError: null
+        },
+        withMap: true,
+        authParam: null,
+        open: false,
+        draggable: true,
+        profile: [],
+        // model: {},
+        toggleDetail: () => {}
+    };
+
+    renderLoadTemplateException = () => {
+       let exception = this.props.card.loadingCardTemplateError;
+       if (isObject(exception)) {
+           exception = exception.status + ": " + exception.data;
+       }
+
+       return (
+           <Modal
+               show={ (exception) ? true : false}
+               bsSize="small"
+               onHide={this.props.toggleDetail} >
+               <Modal.Header closeButton>
+                   <Modal.Title>Data Exception</Modal.Title>
+               </Modal.Header>
+               <Modal.Body>
+                   <div className="mapstore-error">{exception}</div>
+               </Modal.Body>
+               <Modal.Footer>
+               </Modal.Footer>
+           </Modal>
+       );
+   };
+
+    renderTree = () => {
         this.props.configureTree(this.props.card.xml, this.props.treeTemplate);
-    },
-    renderCard() {
+    };
+
+    renderCard = () => {
         const {maxWidth, maxHeight} = getWindowSize();
         const xml = this.props.card.xml;
         const authParam = this.props.authParam;
@@ -132,11 +135,12 @@ const Card = React.createClass({
                 {Template}
                 <SiraTree/>
             </div>;
-    },
+    };
+
     render() {
         return (this.props.open) ? this.renderCard() : null;
     }
-});
+}
 
 module.exports = connect((state) => {
     const featureType = state.siradec.treeFeatureType || state.siradec.activeFeatureType;

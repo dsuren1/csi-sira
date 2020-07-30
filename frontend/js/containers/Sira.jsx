@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -131,40 +132,41 @@ let MapInfoUtils = require('../../MapStore2/web/client/utils/MapInfoUtils');
 
 MapInfoUtils.AVAILABLE_FORMAT = ['TEXT', 'JSON', 'HTML', 'GML3'];
 
-const Sira = React.createClass({
-    propTypes: {
-        mode: React.PropTypes.string,
-        params: React.PropTypes.object,
-        roles: React.PropTypes.object,
-        profile: React.PropTypes.object,
-        loadMapConfig: React.PropTypes.func,
-        reset: React.PropTypes.func,
-        error: React.PropTypes.object,
-        loading: React.PropTypes.bool,
-        nsResolver: React.PropTypes.func,
-        controls: React.PropTypes.object,
-        toggleSiraControl: React.PropTypes.func,
-        setProfile: React.PropTypes.func,
+class Sira extends React.Component {
+    static propTypes = {
+        mode: PropTypes.string,
+        params: PropTypes.object,
+        roles: PropTypes.object,
+        profile: PropTypes.object,
+        loadMapConfig: PropTypes.func,
+        reset: PropTypes.func,
+        error: PropTypes.object,
+        loading: PropTypes.bool,
+        nsResolver: PropTypes.func,
+        controls: PropTypes.object,
+        toggleSiraControl: PropTypes.func,
+        setProfile: PropTypes.func,
         // loadUserIdentity: React.PropTypes.func,
-        plugins: React.PropTypes.object,
-        viewerParams: React.PropTypes.object,
-        configureInlineMap: React.PropTypes.func,
-        configLoaded: React.PropTypes.bool
-    },
-    contextTypes: {
-        router: React.PropTypes.object
-    },
-    getDefaultProps() {
-        return {
-            toggleSiraControl: () => {},
-            setProfile: () => {},
-            // loadUserIdentity: () => {},
-            onLoadFeatureTypeConfig: () => {},
-            mode: 'desktop',
-            viewerParams: {mapType: "openlayers"},
-            configLoaded: false
-        };
-    },
+        plugins: PropTypes.object,
+        viewerParams: PropTypes.object,
+        configureInlineMap: PropTypes.func,
+        configLoaded: PropTypes.bool
+    };
+
+    static contextTypes = {
+        router: PropTypes.object
+    };
+
+    static defaultProps = {
+        toggleSiraControl: () => {},
+        setProfile: () => {},
+        // loadUserIdentity: () => {},
+        onLoadFeatureTypeConfig: () => {},
+        mode: 'desktop',
+        viewerParams: {mapType: "openlayers"},
+        configLoaded: false
+    };
+
     componentWillMount() {
         document.body.className = "body_map";
         if (urlQuery.map) {
@@ -174,7 +176,8 @@ const Sira = React.createClass({
         //    this.props.setProfile(this.props.params.profile, authParams[this.props.params.profile]);
         // }
         // this.props.loadUserIdentity();
-    },
+    }
+
     render() {
         return (
             <div>
@@ -191,15 +194,15 @@ const Sira = React.createClass({
                     <span className={this.props.error && 'error' || !this.props.loading && 'hidden' || ''}>
                         {this.props.error && ("Error: " + this.props.error) || (this.props.loading)}
                     </span>
-                    <SidePanel auth={authParams[this.props.params.profile]} profile={this.props.profile.profile}/>
+                    <SidePanel auth={authParams[this.props?.params?.profile]} profile={this.props.profile.profile}/>
                     <MapViewer
                     plugins={this.props.plugins}
                     params={this.props.viewerParams}
                     />
-                    <Card profile={this.props.profile.profile} authParam={authParams[this.props.params.profile]}/>
+                    <Card profile={this.props.profile.profile} authParam={authParams[this.props?.params?.profile]}/>
                     <GetFeatureInfo
                         display={"accordion"}
-                        params={{authkey: this.props.params.profile ? authParams[this.props.params.profile].authkey : ''}}
+                        params={{authkey: this.props?.params?.profile ? authParams[this.props?.params?.profile].authkey : ''}}
                         profile={this.props.profile.profile}
                         key="getFeatureInfo"/>
                     <MetadataInfoBox panelStyle={{
@@ -213,14 +216,16 @@ const Sira = React.createClass({
                 </div>
             </div>
         );
-    },
-    goToDataset() {
-        this.context.router.push('/dataset/');
-    },
-    goToHome() {
-        this.context.router.push('/');
     }
-});
+
+    goToDataset = () => {
+        this.context.router.history.push('/dataset/');
+    };
+
+    goToHome = () => {
+        this.context.router.history.push('/');
+    };
+}
 
 module.exports = connect((state) => {
     const activeConfig = state.siradec.activeFeatureType && state.siradec.configOggetti[state.siradec.activeFeatureType] || {};

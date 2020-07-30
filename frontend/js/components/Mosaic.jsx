@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -9,22 +10,22 @@
 const React = require('react');
 const Tile = require('./MosaicTile');
 
-const Mosaic = React.createClass({
-    propTypes: {
-        tiles: React.PropTypes.array,
-        boxStyle: React.PropTypes.object,
-        tileClick: React.PropTypes.func,
-        useLink: React.PropTypes.bool,
-        liClass: React.PropTypes.string,
-        className: React.PropTypes.string
-    },
-    getDefaultProps() {
-        return {
-            tiles: [],
-            className: "container blocchetti"
-        };
-    },
-    renderTiles() {
+class Mosaic extends React.Component {
+    static propTypes = {
+        tiles: PropTypes.array,
+        boxStyle: PropTypes.object,
+        tileClick: PropTypes.func,
+        useLink: PropTypes.bool,
+        liClass: PropTypes.string,
+        className: PropTypes.string
+    };
+
+    static defaultProps = {
+        tiles: [],
+        className: "container blocchetti"
+    };
+
+    renderTiles = () => {
         return this.props.tiles.map((tile) => {
             return (<Tile key={tile.id}
                     onClick={this.props.tileClick ? this.props.tileClick.bind(null, tile) : undefined}
@@ -34,7 +35,8 @@ const Mosaic = React.createClass({
                     {...tile}
                     />);
         });
-    },
+    };
+
     render() {
         return (
                 <div className={this.props.className}>
@@ -46,8 +48,6 @@ const Mosaic = React.createClass({
                 </div>
         );
     }
-
-
-});
+}
 
 module.exports = Mosaic;

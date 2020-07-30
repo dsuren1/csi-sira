@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 /**
  * Copyright 2016, GeoSolutions Sas.
  * All rights reserved.
@@ -12,20 +13,18 @@ const Draggable = require('react-draggable');
 const I18N = require('../../MapStore2/web/client/components/I18N/I18N');
 const {getWindowSize} = require('../../MapStore2/web/client/utils/AgentUtils');
 
-const Credits = React.createClass({
-    propTypes: {
-        title: React.PropTypes.string,
-        show: React.PropTypes.string,
-        closePanel: React.PropTypes.func
-    },
+class Credits extends React.Component {
+    static propTypes = {
+        title: PropTypes.string,
+        show: PropTypes.string,
+        closePanel: PropTypes.func
+    };
 
-    getDefaultProps() {
-        return {
-            title: 'title',
-            show: 'none',
-            closePanel: () => {}
-        };
-    },
+    static defaultProps = {
+        title: 'title',
+        show: 'none',
+        closePanel: () => {}
+    };
 
     render() {
         const {maxWidth, maxHeight} = getWindowSize();
@@ -60,5 +59,6 @@ const Credits = React.createClass({
             </Draggable>
           );
     }
-});
+}
+
 module.exports = Credits;

@@ -16,7 +16,7 @@ module.exports = {
         { path: "/nomap/:profile", component: require('./containers/NoMap')},
         { path: "/full/", component: require('./containers/FullScreenPanel')},
         { path: "/full/:profile", component: require('./containers/FullScreenPanel')}
-        ],
+    ],
     pluginsDef: require('./plugins.js'),
     initialState: {
         defaultState: {

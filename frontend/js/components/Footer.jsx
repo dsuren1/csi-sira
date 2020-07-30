@@ -8,15 +8,12 @@
 
 const React = require('react');
 
-const Footer = React.createClass({
+class Footer extends React.Component {
+    static propTypes = {
+    };
 
-  propTypes: {
-  },
-
-  getDefaultProps() {
-      return {
-      };
-  },
+    static defaultProps = {
+    };
 
     render() {
         return (
@@ -41,5 +38,6 @@ const Footer = React.createClass({
         </footer>
         );
     }
-});
+}
+
 module.exports = Footer;
