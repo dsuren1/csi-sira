@@ -105,14 +105,14 @@ class QGis extends React.Component {
         };
         // profile is array with max length = 1
         let profile = [];
-        profile = (this.props.params && this.props.params.profile) ? this.props.params.profile : new Array(urlQuery.profile);
+        profile = (this.props.params && this.props?.params?.profile) ? this.props?.params?.profile : new Array(urlQuery.profile);
         this.props.setProfile(profile, authParams[profile]);
     }
 
     componentDidMount() {
         // profile is array with max length = 1
         let profile = [];
-        profile = (this.props.params && this.props.params.profile) ? this.props.params.profile : new Array(urlQuery.profile);
+        profile = (this.props.params && this.props?.params?.profile) ? this.props?.params?.profile : new Array(urlQuery.profile);
         this.props.setProfile(profile, authParams[profile]);
         if (!this.props.configLoaded && this.props.featureType) {
             this.props.onLoadFeatureTypeConfig(
@@ -154,12 +154,12 @@ class QGis extends React.Component {
             <div className="qgis-spinner">
                 <Spinner style={{width: "60px"}} spinnerName="three-bounce" noFadeIn/>
             </div>
-            ) : (
-          <SideQueryPanel
-               withMap={false}
-               params={{authkey: this.props.profile.authParams.authkey}}
-               toggleControl={this.toggleControl}/>
-            );
+        ) : (
+            <SideQueryPanel
+                withMap={false}
+                params={{authkey: this.props.profile.authParams.authkey}}
+                toggleControl={this.toggleControl}/>
+        );
     };
 
     renderGrid = () => {
@@ -175,14 +175,14 @@ class QGis extends React.Component {
                 zoomToFeatureAction={this.zoomToFeature}
                 exporter={false}
                 selectAllToggle={this.props.selectAllToggle && this.state.qGisType !== "list" ? this.props.selectAllToggle : undefined}/>
-            );
+        );
     };
 
     render() {
         return (
             <div id="qgis-container" className="mappaSiraDecisionale">
-             {this.props.siraControls.grid || (this.state.qGisType === 'list' && this.props.configLoaded && !this.state.loadList) ? this.renderGrid() : this.renderQueryPanel()}
-             <Card profile={this.props.profile.profile} draggable={false} authParam={this.props.profile.authParams} withMap={false}/>
+                {this.props.siraControls.grid || (this.state.qGisType === 'list' && this.props.configLoaded && !this.state.loadList) ? this.renderGrid() : this.renderQueryPanel()}
+                <Card profile={this.props.profile.profile} draggable={false} authParam={this.props.profile.authParams} withMap={false}/>
             </div>
         );
     }
@@ -209,7 +209,7 @@ class QGis extends React.Component {
             }
         }
 
-        /*eslint-enable */
+        /* eslint-enable */
         this.props.selectFeatures(features);
     };
 
@@ -229,7 +229,7 @@ class QGis extends React.Component {
             }
         }
 
-        /*eslint-enable */
+        /* eslint-enable */
     };
 
     goToDetail = (id, detailsConfig) => {
@@ -242,7 +242,7 @@ class QGis extends React.Component {
         }
         let templateUrl = typeof detailsConfig.template === "string" ? detailsConfig.template : detailsConfig.template.QGIS;
         this.props.loadCardTemplate(
-             templateUrl,
+            templateUrl,
             // this.props.detailsConfig.cardModelConfigUrl,
             `${url}&FEATUREID=${id}${(this.props.profile.authParams.authkey ? "&authkey=" + this.props.profile.authParams.authkey : "")}`
         );

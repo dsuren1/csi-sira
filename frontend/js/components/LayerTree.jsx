@@ -54,7 +54,7 @@ class LayerTree extends React.Component {
                         <DefaultLayer
                             onToggle={this.props.onToggleLayer}
                             propertiesChangeHandler={this.props.propertiesChangeHandler}
-                            />
+                        />
                     </DefaultGroup>
                 </TOC>
             </div>

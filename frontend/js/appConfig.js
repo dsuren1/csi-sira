@@ -70,9 +70,9 @@ module.exports = {
             mousePosition: {enabled: true, crs: "EPSG:4326", showCenter: true}
         }
     },
-    // themeCfg: {
-    //     theme: "sira"
-    // },
+    themeCfg: {
+        theme: "sira"
+    },
     storeOpts: {
         persist: {
             whitelist: ['security']

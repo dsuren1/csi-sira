@@ -168,7 +168,7 @@ class Sira extends React.Component {
     };
 
     componentWillMount() {
-        document.body.className = "body_map";
+        document.body.className = "body_map ms2";
         if (urlQuery.map) {
             this.props.configureInlineMap(JSON.parse(urlQuery.map));
         }

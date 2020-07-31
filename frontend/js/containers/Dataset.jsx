@@ -41,38 +41,38 @@ const {toggleAddMap, addLayersInCart, loadNodeMapRecords, addFeatureTypeLayerInC
 
 const mapStateToPropsMIB = (state) => {
     return {
-      show: state.metadatainfobox.show,
-      openLegendPanel: state.metadatainfobox.openLegendPanel,
-      title: state.metadatainfobox.title,
-      text: state.metadatainfobox.text,
-      numDatasetObjectCalc: state.metadatainfobox.numDatasetObjectCalc,
-      dataProvider: state.metadatainfobox.dataProvider,
-      urlMetadato: state.metadatainfobox.urlMetadato,
-      urlWMS: state.metadatainfobox.urlWMS,
-      urlWFS: state.metadatainfobox.urlWFS,
-      urlLegend: state.metadatainfobox.urlLegend,
-      error: state.metadatainfobox.error,
-      showButtonLegend: state.metadatainfobox.showButtonLegend
-  };
+        show: state.metadatainfobox.show,
+        openLegendPanel: state.metadatainfobox.openLegendPanel,
+        title: state.metadatainfobox.title,
+        text: state.metadatainfobox.text,
+        numDatasetObjectCalc: state.metadatainfobox.numDatasetObjectCalc,
+        dataProvider: state.metadatainfobox.dataProvider,
+        urlMetadato: state.metadatainfobox.urlMetadato,
+        urlWMS: state.metadatainfobox.urlWMS,
+        urlWFS: state.metadatainfobox.urlWFS,
+        urlLegend: state.metadatainfobox.urlLegend,
+        error: state.metadatainfobox.error,
+        showButtonLegend: state.metadatainfobox.showButtonLegend
+    };
 };
 
 const mapDispatchToPropsMIB = (dispatch) => {
     return {
-    loadLegend: (u, actualUrl) => {
-        if (actualUrl && actualUrl.length === 0) {
-            dispatch(loadLegends(u));
+        loadLegend: (u, actualUrl) => {
+            if (actualUrl && actualUrl.length === 0) {
+                dispatch(loadLegends(u));
+            }
+            dispatch(toggleLegendBox());
+        },
+        closePanel: () => {
+            dispatch(hideBox());
         }
-        dispatch(toggleLegendBox());
-    },
-    closePanel: () => {
-        dispatch(hideBox());
-    }
-  };
+    };
 };
 const MetadataInfoBox = connect(
     mapStateToPropsMIB,
     mapDispatchToPropsMIB
-    )(require('../components/MetadataInfoBox'));
+)(require('../components/MetadataInfoBox'));
 
 const AddMapModal = connect(({addmap = {}}) => ({
     error: addmap.error,
@@ -80,33 +80,33 @@ const AddMapModal = connect(({addmap = {}}) => ({
     loading: addmap.loading,
     // node: demoNode,
     show: addmap.show
-   }), {
-   close: toggleAddMap.bind(null, false),
-   addLayers: addLayersInCart
+}), {
+    close: toggleAddMap.bind(null, false),
+    addLayers: addLayersInCart
 })(require('../components/addmap/AddMapModal'));
 
 const authParams = {
     admin: {
-         userName: "admin",
-         authkey: "84279da9-f0b9-4e45-ac97-48413a48e33f"
+        userName: "admin",
+        authkey: "84279da9-f0b9-4e45-ac97-48413a48e33f"
     },
     A: {
-         userName: "profiloa",
-         authkey: "59ccadf2-963e-448c-bc9a-b3a5e8ed20d7"
+        userName: "profiloa",
+        authkey: "59ccadf2-963e-448c-bc9a-b3a5e8ed20d7"
     },
     B: {
-         userName: "profilob",
-         authkey: "d6e5f5a5-2d26-43aa-8af3-13f8dcc0d03c"
+        userName: "profilob",
+        authkey: "d6e5f5a5-2d26-43aa-8af3-13f8dcc0d03c"
     },
     C: {
-         userName: "profiloc",
-         authkey: "0505bb64-21b6-436c-86f9-9c1280f15a6c"
+        userName: "profiloc",
+        authkey: "0505bb64-21b6-436c-86f9-9c1280f15a6c"
     },
     D: {
-         userName: "profilod",
-         authkey: "4176ea85-9a9a-42a5-8913-8f6f85813dab"
+        userName: "profilod",
+        authkey: "4176ea85-9a9a-42a5-8913-8f6f85813dab"
     }
- };
+};
 
 class Dataset extends React.Component {
     static propTypes = {
@@ -167,9 +167,9 @@ class Dataset extends React.Component {
     componentWillMount() {
         const {nodesLoaded, loading, category} = this.props;
         if (this.props?.params?.profile) {
-            this.props.setProfile(this.props.params.profile, authParams[this.props.params.profile]);
+            this.props.setProfile(this.props?.params?.profile, authParams[this.props?.params?.profile]);
         }
-        // this.props.setProfile(this.props.params.profile, authParams[this.props.params.profile]);
+        // this.props.setProfile(this.props?.params?.profile, authParams[this.props?.params?.profile]);
         if (!nodesLoaded && !loading && category && category.id) {
             this.loadMetadata({category: category});
         }
@@ -181,9 +181,9 @@ class Dataset extends React.Component {
 
     componentWillReceiveProps({loading, map, notAuthorized, configOggetti}) {
         if (!loading && this.props.map && this.props.map !== map) {
-            if (this.props.params.profile) {
+            if (this.props?.params?.profile) {
                 this.context.router.history.push('/map/${this.props.params.profile}/');
-            }else {
+            } else {
                 this.context.router.history.push('/map/');
             }
             // this.context.router.history.push(`/${this.props.params.profile}`);
@@ -207,7 +207,7 @@ class Dataset extends React.Component {
                     redirect: null
                 }
             });
-            if (this.props.params.profile) {
+            if (this.props?.params?.profile) {
                 this.context.router.history.push(this.state.waitingForConfig.redirect + '${this.props.params.profile}/');
             } else {
                 this.context.router.history.push(this.state.waitingForConfig.redirect);
@@ -232,7 +232,7 @@ class Dataset extends React.Component {
     };
 
     renderUnauthorized = () => {
-        return (<Modal show={true} bsSize="small" onHide={() => this.props.setActiveFeatureType(null)}>
+        return (<Modal show bsSize="small" onHide={() => this.props.setActiveFeatureType(null)}>
             <Modal.Header className="dialog-error-header-side" closeButton>
                 <Modal.Title>Errore</Modal.Title>
             </Modal.Header>
@@ -256,7 +256,7 @@ class Dataset extends React.Component {
             </div>) : (<noscript key="categoriesSearch"/>);
         const tocObjects = (
             <TOC id="dataset-toc" key="dataset-toc" nodes={showCategories ? this.props.nodes : this.props.objects}>
-                    { showCategories ?
+                { showCategories ?
                     (<DefaultGroup animateCollapse={false} onToggle={this.props.onToggle}>
                         <DefaultNode
                             expandFilterPanel={this.openFilterPanel}
@@ -265,21 +265,21 @@ class Dataset extends React.Component {
                             groups={this.props.nodes}
                             showInfoBox={this.showInfoBox}
                             addToMap={this.addToCart}
-                            />
+                        />
                     </DefaultGroup>) : (<DefaultNode
-                            expandFilterPanel={this.openFilterPanel}
-                            toggleSiraControl={this.searchAll}
-                            flat={true}
-                            showInfoBox={this.showInfoBox}
-                            addToMap={this.addToCart}
-                            />) }
-                </TOC>);
+                        expandFilterPanel={this.openFilterPanel}
+                        toggleSiraControl={this.searchAll}
+                        flat
+                        showInfoBox={this.showInfoBox}
+                        addToMap={this.addToCart}
+                    />) }
+            </TOC>);
         const viste = this.props.views ? this.props.views.map((v) => (<Vista key={v.id}
             node={v}
             onToggle={this.props.onToggle}
             addToMap={this.loadThematicView}
             showInfoBox={this.showInfoBox}
-            />)) : (<div/>);
+        />)) : (<div/>);
         const objEl = [searchSwitch, tocObjects];
         return (
             <Tabs
@@ -295,7 +295,7 @@ class Dataset extends React.Component {
                     title={`Viste Tematiche (${views ? views.length : 0})`}>
                     {loading ? this.renderSpinner() : (<div id="dataset-results-view"> {viste}</div>)}
                 </Tab>
-        </Tabs>);
+            </Tabs>);
     };
 
     render() {
@@ -310,18 +310,18 @@ class Dataset extends React.Component {
                         {this.props.notAuthorized && this.renderUnauthorized()}
                     </div>
                     <div className="dataset-footer-container">
-                    <Footer/>
+                        <Footer/>
                     </div>
                 </div>
                 <MetadataInfoBox panelStyle={{
-                        height: "500px",
-                        width: "650px",
-                        zIndex: 1000,
-                        left: "calc(50% - 250px)",
-                        top: -100,
-                        position: "fixed",
-                        marginBottom: "0px",
-                        boxShadow: "0 0 5px 1px rgba(94,94,94,1)"}}/>
+                    height: "500px",
+                    width: "650px",
+                    zIndex: 1000,
+                    left: "calc(50% - 250px)",
+                    top: -100,
+                    position: "fixed",
+                    marginBottom: "0px",
+                    boxShadow: "0 0 5px 1px rgba(94,94,94,1)"}}/>
                 <AddMapModal />
             </div>);
     }
@@ -349,7 +349,7 @@ class Dataset extends React.Component {
         if ( !node.featureType) {
             this.props.toggleAddMap(true);
             this.props.loadNodeMapRecords(node);
-        }else if (node.featureType) {
+        } else if (node.featureType) {
             const featureType = node.featureType.replace('featuretype=', '').replace('.json', '');
             if (!this.props.configOggetti[featureType]) {
                 this.props.loadFeatureTypeConfig(null, {authkey: this.props.userprofile.authParams.authkey ? this.props.userprofile.authParams.authkey : ''}, featureType, true, false, node.id, true, node);
@@ -376,7 +376,7 @@ class Dataset extends React.Component {
             if (this.props.activeFeatureType !== featureType) {
                 this.props.setActiveFeatureType(featureType);
             }
-            if (this.props.params.profile) {
+            if (this.props?.params?.profile) {
                 this.context.router.history.push('/full/${this.props.params.profile}/');
             } else {
                 this.context.router.history.push('/full/');
@@ -404,7 +404,7 @@ class Dataset extends React.Component {
             this.props.setGridType('all_results');
             this.props.toggleSiraControl('grid', true);
             this.props.setNodeInUse(node);
-            if (this.props.params.profile) {
+            if (this.props?.params?.profile) {
                 this.context.router.history.push('/full/${this.props.params.profile}/');
             } else {
                 this.context.router.history.push('/full/');

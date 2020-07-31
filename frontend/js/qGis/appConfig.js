@@ -16,5 +16,8 @@ module.exports = {
             mousePosition: {enabled: false}
         }
     },
+    themeCfg: {
+        theme: "sira"
+    },
     storeOpts: {}
 };

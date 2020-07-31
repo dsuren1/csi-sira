@@ -25,5 +25,8 @@ module.exports = {
             mousePosition: {enabled: true, crs: "EPSG:4326", showCenter: true}
         }
     },
+    themeCfg: {
+        theme: "sira"
+    },
     storeOpts: {}
 };

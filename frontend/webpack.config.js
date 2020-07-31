@@ -1,6 +1,5 @@
 const path = require('path');
 const extractThemesPlugin = require('./MapStore2/build/themes.js').extractThemesPlugin;
-const themeEntries = require('./MapStore2/build/themes.js').themeEntries;
 const assign = require('object-assign');
 
 module.exports = assign({}, require('./MapStore2/build/buildConfig')(
@@ -9,10 +8,9 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
         siranomap: path.join(__dirname, "js", "siranomap", "app"),
         qgis: path.join(__dirname, "js", "qGis", "app")
     },
-    // {
-    //     "theme/sira": path.join(__dirname, "assets", "theme", "sira", "theme.less")
-    // },
-    themeEntries,
+    {
+        "themes/sira": path.join(__dirname, "assets", "themes", "sira", "theme.less")
+    },
     {
         base: __dirname,
         dist: path.join(__dirname, "dist"),
@@ -22,7 +20,7 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     extractThemesPlugin,
     false,
     "/dist/",
-    null,
+    '.ms2',
     null,
     {
         '@mapstore': path.resolve(__dirname, 'MapStore2/web/client'),

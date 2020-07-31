@@ -10,7 +10,7 @@ const React = require('react');
 const {connect} = require('react-redux');
 const {createSelector} = require('reselect');
 const {changeLayerProperties, changeGroupProperties, toggleNode,
-       sortNode, showSettings, hideSettings, updateSettings, updateNode, removeNode} = require('../../MapStore2/web/client/actions/layers');
+    sortNode, showSettings, hideSettings, updateSettings, updateNode, removeNode} = require('../../MapStore2/web/client/actions/layers');
 const {groupsSelector} = require('../../MapStore2/web/client/selectors/layers');
 const {loadMetadata, showBox} = require('../actions/metadatainfobox');
 const LayersUtils = require('../../MapStore2/web/client/utils/LayersUtils');
@@ -110,32 +110,32 @@ class LayerTree extends React.Component {
             return <div></div>;
         }
         const Group = ( <DefaultGroup animateCollapse={false} onSort={this.props.onSort}
-                                  propertiesChangeHandler={this.props.groupPropertiesChangeHandler}
-                                  onToggle={this.props.onToggleGroup}
-                                  style={this.props.groupStyle}
-                                  groupVisibilityCheckbox={true}
-                                  visibilityCheckType={this.props.visibilityCheckType}
-                                  />);
+            propertiesChangeHandler={this.props.groupPropertiesChangeHandler}
+            onToggle={this.props.onToggleGroup}
+            style={this.props.groupStyle}
+            groupVisibilityCheckbox
+            visibilityCheckType={this.props.visibilityCheckType}
+        />);
         const Layer = (<DefaultLayer
-                            settingsOptions={this.props.settingsOptions}
-                            onToggle={this.showInfoBox}
-                            onSettings={this.props.onSettings}
-                            propertiesChangeHandler={this.props.layerPropertiesChangeHandler}
-                            hideSettings={this.props.hideSettings}
-                            settings={this.props.settings}
-                            updateSettings={this.props.updateSettings}
-                            updateNode={this.props.updateNode}
-                            removeNode={this.props.removeNode}
-                            visibilityCheckType={this.props.visibilityCheckType}
-                            activateLegendTool={this.props.activateLegendTool}
-                            activateSettingsTool={this.props.activateSettingsTool}
-                            settingsText={<Message msgId="layerProperties.windowTitle"/>}
-                            opacityText={<Message msgId="opacity"/>}
-                            saveText={<Message msgId="save"/>}
-                            closeText={<Message msgId="close"/>}
-                            groups={this.props.groups}
-                            expandFilterPanel={this.openFilterPanel}
-                            searchAll={this.searchAll}/>);
+            settingsOptions={this.props.settingsOptions}
+            onToggle={this.showInfoBox}
+            onSettings={this.props.onSettings}
+            propertiesChangeHandler={this.props.layerPropertiesChangeHandler}
+            hideSettings={this.props.hideSettings}
+            settings={this.props.settings}
+            updateSettings={this.props.updateSettings}
+            updateNode={this.props.updateNode}
+            removeNode={this.props.removeNode}
+            visibilityCheckType={this.props.visibilityCheckType}
+            activateLegendTool={this.props.activateLegendTool}
+            activateSettingsTool={this.props.activateSettingsTool}
+            settingsText={<Message msgId="layerProperties.windowTitle"/>}
+            opacityText={<Message msgId="opacity"/>}
+            saveText={<Message msgId="save"/>}
+            closeText={<Message msgId="close"/>}
+            groups={this.props.groups}
+            expandFilterPanel={this.openFilterPanel}
+            searchAll={this.searchAll}/>);
         return (
             <div>
                 <TOC onSort={this.props.onSort} filter={this.getNoBackgroundLayers}
@@ -149,7 +149,7 @@ class LayerTree extends React.Component {
     openFilterPanel = (status, featureType) => {
         if (!this.props.configOggetti[featureType]) {
             this.props.loadFeatureTypeConfig(null, {authkey: this.props.userprofile.authParams.authkey}, featureType, true);
-        }else if (this.props.activeFeatureType !== featureType) {
+        } else if (this.props.activeFeatureType !== featureType) {
             this.props.setActiveFeatureType(featureType);
         }
         this.props.expandFilterPanel(status);
@@ -158,7 +158,7 @@ class LayerTree extends React.Component {
     searchAll = (featureType) => {
         if (!this.props.configOggetti[featureType]) {
             this.props.loadFeatureTypeConfig(null, {authkey: this.props.userprofile.authParams.authkey}, featureType, true);
-        }else if (this.props.activeFeatureType !== featureType) {
+        } else if (this.props.activeFeatureType !== featureType) {
             this.props.setActiveFeatureType(featureType);
         }
         this.props.setGridType('all_results');

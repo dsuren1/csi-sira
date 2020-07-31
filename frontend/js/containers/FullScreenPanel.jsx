@@ -31,8 +31,8 @@ const Spinner = require('react-spinkit');
 const {selectFeatures} = require('../actions/featuregrid');
 
 const {
- loadFeatureTypeConfig,
- expandFilterPanel
+    loadFeatureTypeConfig,
+    expandFilterPanel
 } = require('../actions/siradec');
 
 const {toggleSiraControl} = require('../actions/controls');
@@ -42,30 +42,30 @@ const {addLayer} = require('../../MapStore2/web/client/actions/layers');
 
 class FullScreen extends React.Component {
     static propTypes = {
-         params: PropTypes.object,
-         featureType: PropTypes.string,
-         error: PropTypes.object,
-         filterPanelExpanded: PropTypes.bool,
-         onLoadFeatureTypeConfig: PropTypes.func,
-         expandFilterPanel: PropTypes.func,
-         toggleSiraControl: PropTypes.func,
-         configLoaded: PropTypes.bool,
-         profile: PropTypes.object,
-         siraControls: PropTypes.object,
-         selectFeatures: PropTypes.func,
-         detailsConfig: PropTypes.object,
-         gridConfig: PropTypes.object,
-         loadCardTemplate: PropTypes.func,
-         selectAllToggle: PropTypes.func,
-         gridExpanded: PropTypes.bool,
-         fTypeConfigLoading: PropTypes.bool,
-         changeMapView: PropTypes.func,
-         addLayer: PropTypes.func,
-         srs: PropTypes.string,
-         maxZoom: PropTypes.number,
-         map: PropTypes.object,
-         siraActiveConfig: PropTypes.object,
-         layers: PropTypes.array
+        params: PropTypes.object,
+        featureType: PropTypes.string,
+        error: PropTypes.object,
+        filterPanelExpanded: PropTypes.bool,
+        onLoadFeatureTypeConfig: PropTypes.func,
+        expandFilterPanel: PropTypes.func,
+        toggleSiraControl: PropTypes.func,
+        configLoaded: PropTypes.bool,
+        profile: PropTypes.object,
+        siraControls: PropTypes.object,
+        selectFeatures: PropTypes.func,
+        detailsConfig: PropTypes.object,
+        gridConfig: PropTypes.object,
+        loadCardTemplate: PropTypes.func,
+        selectAllToggle: PropTypes.func,
+        gridExpanded: PropTypes.bool,
+        fTypeConfigLoading: PropTypes.bool,
+        changeMapView: PropTypes.func,
+        addLayer: PropTypes.func,
+        srs: PropTypes.string,
+        maxZoom: PropTypes.number,
+        map: PropTypes.object,
+        siraActiveConfig: PropTypes.object,
+        layers: PropTypes.array
     };
 
     static contextTypes = {
@@ -83,8 +83,8 @@ class FullScreen extends React.Component {
     };
 
     state = {
-     loadList: true
-};
+        loadList: true
+    };
 
     componentWillMount() {
         this.setState({width: getWindowSize().maxWidth});
@@ -94,7 +94,7 @@ class FullScreen extends React.Component {
     }
 
     componentDidMount() {
-        document.body.className = "body_map";
+        document.body.className = "body_map ms2";
     }
 
     componentWillReceiveProps(nextProps) {
@@ -110,9 +110,9 @@ class FullScreen extends React.Component {
                 this.props.toggleSiraControl('grid');
             }
             this.props.selectFeatures([]);
-            if (this.props.params.profile) {
+            if (this.props?.params?.profile) {
                 this.context.router.history.push('/map/${this.props.params.profile}');
-            }else {
+            } else {
                 this.context.router.history.push('/map/');
             }
         }
@@ -131,7 +131,7 @@ class FullScreen extends React.Component {
                 // authkey: (this.props.profile.authParams && this.props.profile.authParams.authkey) ? this.props.profile.authParams.authkey : '')
                 params={{authkey: this.props.profile.authParams && this.props.profile.authParams.authkey ? this.props.profile.authParams.authkey : ''}}
                 toggleControl={this.toggleControl}/>
-            );
+        );
     };
 
     renderGrid = () => {
@@ -157,7 +157,7 @@ class FullScreen extends React.Component {
         let comp;
         if (gridExpanded) {
             comp = this.renderGrid();
-        }else {
+        } else {
             comp = this.renderQueryPanel();
         }
         return (
@@ -170,9 +170,9 @@ class FullScreen extends React.Component {
 
     toggleControl = () => {
         this.props.expandFilterPanel(false);
-        if (this.props.params.profile) {
+        if (this.props?.params?.profile) {
             this.context.router.history.push(`/dataset/${this.props.params.profile}/`);
-        }else {
+        } else {
             this.context.router.history.push('/dataset/');
         }
     };
@@ -204,21 +204,21 @@ class FullScreen extends React.Component {
 module.exports = connect((state) => {
     const activeConfig = state.siradec.configOggetti[state.siradec.activeFeatureType] || {};
     return {
-     profile: state.userprofile,
-     error: state.loadingError || (state.locale && state.locale.localeError) || null,
-     filterPanelExpanded: state.siradec.filterPanelExpanded,
-     siraControls: state.siraControls,
-     detailsConfig: activeConfig && activeConfig.card,
-     gridConfig: activeConfig && activeConfig.featuregrid,
-     featureType: activeConfig && activeConfig.featureTypeName,
-     searchUrl: state.queryform.searchUrl,
-     pagination: state.queryform.pagination,
-     gridExpanded: state.siraControls.grid,
-     fTypeConfigLoading: state.siradec.fTypeConfigLoading,
-     map: mapSelector(state),
-     siraActiveConfig: activeConfig,
-     layers: state.layers.flat
- };
+        profile: state.userprofile,
+        error: state.loadingError || (state.locale && state.locale.localeError) || null,
+        filterPanelExpanded: state.siradec.filterPanelExpanded,
+        siraControls: state.siraControls,
+        detailsConfig: activeConfig && activeConfig.card,
+        gridConfig: activeConfig && activeConfig.featuregrid,
+        featureType: activeConfig && activeConfig.featureTypeName,
+        searchUrl: state.queryform.searchUrl,
+        pagination: state.queryform.pagination,
+        gridExpanded: state.siraControls.grid,
+        fTypeConfigLoading: state.siradec.fTypeConfigLoading,
+        map: mapSelector(state),
+        siraActiveConfig: activeConfig,
+        layers: state.layers.flat
+    };
 }, {
     setProfile,
     onLoadFeatureTypeConfig: loadFeatureTypeConfig,
