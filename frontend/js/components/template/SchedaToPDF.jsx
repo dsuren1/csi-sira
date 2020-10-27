@@ -15,7 +15,7 @@ const TemplateUtils = require('../../utils/TemplateUtils');
 const assign = require('object-assign');
 const scheda2pdf = require('../../utils/ExportScheda');
 const Spinner = require('react-spinkit');
-const {endsWith} = require('lodash');
+const {endsWith, includes} = require('lodash');
 
 class SchedaToPDF extends React.Component {
     static propTypes = {
@@ -32,7 +32,7 @@ class SchedaToPDF extends React.Component {
                 PropTypes.string])
         }),
         profile: PropTypes.array,
-        pdfname: PropTypes.string,
+        configOggetti: PropTypes.object,
         authParam: PropTypes.object,
         withMap: PropTypes.bool,
         generatePDF: PropTypes.func,
@@ -45,7 +45,7 @@ class SchedaToPDF extends React.Component {
             xml: null,
             loadingCardTemplateError: null
         },
-        pdfname: 'download.pdf',
+        configOggetti: {},
         profile: [],
         withMap: true,
         authParam: null,
@@ -121,7 +121,8 @@ class SchedaToPDF extends React.Component {
     };
 
     resolvePdfName = () => {
-        let name = this.props.pdfname;
+        const [feature] = Object.values(this.props.configOggetti).filter(ft=> includes(this.props.card.template, ft.featureTypeNameLabel));
+        let name = feature?.card?.pdfname || 'download.pdf';
         (name.match(/\{\{.+?\}\}/g) || []).forEach((placeholder) => {
             const el = placeholder.replace('{{', '').replace('}}', '');
             name = name.replace(placeholder, TemplateUtils.getValue(this.props.card.xml, el));
@@ -132,10 +133,9 @@ class SchedaToPDF extends React.Component {
 }
 
 module.exports = connect((state) => {
-    const activeConfig = state.siradec.configOggetti[state.siradec.activeFeatureType] || {};
     return {
         card: state.cardtemplate || {},
-        pdfname: activeConfig.card && activeConfig.card.pdfname
+        configOggetti: state.siradec.configOggetti
     };
 }, {
     generatePDF: generatePDF.bind(null, false),
